@@ -1,13 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const algosdk = require('algosdk');
 require('dotenv').config();
-// const utils = require('./utils');
 const app = express();
 var mongoose = require('mongoose');
 var config = require('./config');
 const path = require('path');
-
+require('./createData');
 
 //Mongoose connection
 mongoose.connect(config.db.mongoURI, { useNewUrlParser: true })
