@@ -36,16 +36,16 @@ const Gig = mongoose.model('Gig');
 
 app.post('/postData', (req, res) => {
 
-   
 })
+
+app.listen(port, () => {
+    console.log(`server started at port ${port}`);
+})
+
+
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "public", "index.html"));
 });
 
 var port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-    console.log(`server started at port ${port}`);
-})
-

@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "live-server public/",
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "algosdk": "^1.2.2",

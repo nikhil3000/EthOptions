@@ -7,7 +7,7 @@ if(process.env.NODE_ENV === 'production'){
 }
 else
 {	
-		mongoURI = 'mongodb://localhost:27017/gigDApp'
+		mongoURI = 'mongodb://localhost:27017/ethOptions'
 }
 
 

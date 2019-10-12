@@ -16,7 +16,6 @@
     "dependencies": {
         "@babel/plugin-transform-regenerator": "^7.4.0",
         "@babel/polyfill": "^7.4.0",
-        "algosdk": "^1.2.2",
         "axios": "^0.18.0",
         "babel-core": "6.25.0",
         "babel-loader": "7.1.1",
@@ -25,7 +24,6 @@
         "babel-preset-react": "6.24.1",
         "brotli-webpack-plugin": "^1.1.0",
         "compression-webpack-plugin": "^2.0.0",
-        "conseiljs": "^0.2.6",
         "css-loader": "^2.0.2",
         "history": "^4.7.2",
         "mongoose": "^5.6.11",
