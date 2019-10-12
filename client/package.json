@@ -1,0 +1,50 @@
+{
+    "name": "client",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "start-client": "webpack-dev-server --mode=development --host 0.0.0.0 --env.NODE_ENV=development",
+        "build-prod": "webpack -p --mode=production --config=production-webpack.config.js",
+        "build-dev": "webpack --mode=development",
+        "dev": "concurrently \"webpack-dev-server\" \"nodemon ./server/index.js\"",
+        "analyze": "source-map-explorer ./src/app.js",
+        "start": "webpack-dev-server --open --config webpack.dev.js",
+        "build": "webpack --config webpack.prod.js"
+    },
+    "proxy": "http://localhost:5000",
+    "dependencies": {
+        "@babel/plugin-transform-regenerator": "^7.4.0",
+        "@babel/polyfill": "^7.4.0",
+        "algosdk": "^1.2.2",
+        "axios": "^0.18.0",
+        "babel-core": "6.25.0",
+        "babel-loader": "7.1.1",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "6.24.1",
+        "brotli-webpack-plugin": "^1.1.0",
+        "compression-webpack-plugin": "^2.0.0",
+        "conseiljs": "^0.2.6",
+        "css-loader": "^2.0.2",
+        "history": "^4.7.2",
+        "mongoose": "^5.6.11",
+        "node-sass": "^4.12.0",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-router-dom": "^4.3.1",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.1",
+        "terser-webpack-plugin": "^1.4.1",
+        "webpack": "^4.28.1",
+        "webpack-dev-server": "^3.1.10",
+        "webpack-merge": "^4.2.1"
+    },
+    "devDependencies": {
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
+        "express": "^4.16.4",
+        "source-map-explorer": "^1.8.0",
+        "webpack-cli": "^3.1.2"
+    }
+}
