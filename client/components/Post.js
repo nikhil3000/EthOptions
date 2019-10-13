@@ -1,45 +1,70 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import Select from 'react-select';
-import {data} from '../data'
+import CreatableSelect from 'react-select/creatable';
+import DatePicker from "react-datepicker";
+import { data } from '../data'
+import "react-datepicker/dist/react-datepicker.css";
 
-import { pureStakeKey } from '../config';
 
 
 const colourOptions = [
     { value: 'abc', label: 'chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' },
-  ];
+];
 
 export default class Post extends React.Component {
 
     constructor(props) {
         super(props);
         this.handlePostFormSubmit = this.handlePostFormSubmit.bind(this);
-    }
-    componentDidMount() {
-        console.log(data.length);
+        this.handleBaseTokenChange = this.handleBaseTokenChange.bind(this);
+        this.handleQuoteTokenChange = this.handleQuoteTokenChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
+        this.state = {
+            baseTokenObject: undefined,
+            quoteTokenObject: undefined,
+            expiryDate:undefined
+        }
     }
 
-    async handlePostFormSubmit(e) {
+    handlePostFormSubmit(e) {
 
         e.preventDefault();
-        const verifier = e.target.elements.verifier.value.trim();
-        const desc = e.target.elements.desc.value.trim();
-        const amount = e.target.elements.amount.value.trim();
+        const quantity = e.target.elements.quantity.value.trim();
+        const strikePrice = e.target.elements.strikePrice.value.trim();
+        if(this.state.baseTokenObject && this.state.quoteTokenObject && this.state.expiryDate)
+        {
+            console.log(quantity);
+            console.log(strikePrice);
+            console.log(this.state.baseTokenObject);
+            console.log(this.state.quoteTokenObject);
+            console.log(this.state.expiryDate);
 
-        var Gigbody = {
-
+            // axios.post('http://localhost:5000/postGig', Gigbody)
+            // .then(res => {
+            //     console.log(res);
+            // })
+            // .catch(err => {
+            //     console.log(err);
+            // })
         }
+        else{
+            window.alert("Choose some value for all the fields.");
+        }   
+    }
 
-        axios.post('http://localhost:5000/postGig', Gigbody)
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+    handleBaseTokenChange(baseTokenObject) {
+        this.setState({ baseTokenObject: baseTokenObject});
+    }
+
+    handleQuoteTokenChange(quoteTokenObject) {
+        this.setState({ quoteTokenObject: quoteTokenObject});
+    }
+
+
+    handleDateChange(date) {
+        this.setState({expiryDate:date});
     }
 
     render() {
@@ -47,40 +72,55 @@ export default class Post extends React.Component {
             <div className="post_body">
                 <span>Create Option</span>
                 <div>
-                    <form className="container">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <form className="container" onSubmit={this.handlePostFormSubmit}>
+                        <div className="form-group">
+                            <label for="exampleInputEmail1">Base Token</label>
+                            <Fragment>
+                                <CreatableSelect
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    defaultValue={''}
+                                    onChange={this.handleBaseTokenChange}
+                                    options={data}
+                                />
+                            </Fragment>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"></input>
+                        <div className="form-group">
+                            <label for="exampleInputEmail1">Quote Token</label>
+                            <Fragment>
+                                <CreatableSelect
+                                    className="basic-single"
+                                    classNamePrefix="select"
+                                    defaultValue={''}
+                                    onChange={this.handleQuoteTokenChange}
+                                    options={data}
+                                />
+                            </Fragment>
                         </div>
-                        <div class="form-group form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        <div className="form-group">
+                            <label for="noOfTokens">Number of Tokens</label>
+                            <input type="number" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity"></input>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <Fragment>
-                            <Select
-                                className="basic-single"
-                                classNamePrefix="select"
-                                defaultValue={''}
-                                // isDisabled={isDisabled}
-                                // isLoading={isLoading}
-                                // isClearable={isClearable}
-                                // isRtl={isRtl}
-                                isSearchable={true}
-                                name="token"
-                                options={data}
+                        <div className="form-group">
+                            <label for="strikePrice">Strike price per base token in quote token</label>
+                            <input type="number" className="form-control" required id="strikePrice" name="strikePrice" placeholder="Strike prices"></input>
+                        </div>
+
+                        <div className="form-group">
+                            <label for="date">Expiry Date</label><br></br>
+                            <DatePicker
+                                selected={this.state.expiryDate || new Date()}
+                                onChange={this.handleDateChange}
+                                id="date"
                             />
-                        </Fragment>
+                        </div>
+
+                        <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
 
-                </div>
-                )
-            }
-        
+            </div>
+        )
+    }
+
 }
