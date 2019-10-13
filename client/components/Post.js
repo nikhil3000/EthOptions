@@ -4,14 +4,8 @@ import CreatableSelect from 'react-select/creatable';
 import DatePicker from "react-datepicker";
 import { data } from '../data'
 import "react-datepicker/dist/react-datepicker.css";
+import {faucetABI, faucetAddress} from '../config'
 
-
-
-const colourOptions = [
-    { value: 'abc', label: 'chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
 
 export default class Post extends React.Component {
 
@@ -28,6 +22,10 @@ export default class Post extends React.Component {
         }
     }
 
+    componentDidMount() {
+        console.log(this.props.web3.givenProvider.selectedAddress);
+    }
+
     handlePostFormSubmit(e) {
 
         e.preventDefault();
@@ -40,6 +38,13 @@ export default class Post extends React.Component {
             console.log(this.state.baseTokenObject);
             console.log(this.state.quoteTokenObject);
             console.log(this.state.expiryDate);
+            var metamaskAccount2 = "0x0456A48AcBD784A586B9A29D425f6D444e2063ad";
+            const faucetContract = new this.props.web3.eth.Contract(JSON.parse(faucetABI),faucetAddress);       
+            faucetContract.methods.approve(metamaskAccount2,500).send({from:this.props.web3.givenProvider.selectedAddress},(err,data)=>{
+                console.log("err",err);
+                console.log("data",data);
+            }) 
+
 
             // axios.post('http://localhost:5000/postGig', Gigbody)
             // .then(res => {
@@ -74,7 +79,7 @@ export default class Post extends React.Component {
                 <div>
                     <form className="container" onSubmit={this.handlePostFormSubmit}>
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Base Token</label>
+                            <label htmlFor="exampleInputEmail1">Base Token</label>
                             <Fragment>
                                 <CreatableSelect
                                     className="basic-single"
@@ -86,7 +91,7 @@ export default class Post extends React.Component {
                             </Fragment>
                         </div>
                         <div className="form-group">
-                            <label for="exampleInputEmail1">Quote Token</label>
+                            <label htmlFor="exampleInputEmail1">Quote Token</label>
                             <Fragment>
                                 <CreatableSelect
                                     className="basic-single"
@@ -98,16 +103,16 @@ export default class Post extends React.Component {
                             </Fragment>
                         </div>
                         <div className="form-group">
-                            <label for="noOfTokens">Number of Tokens</label>
+                            <label htmlFor="noOfTokens">Number of Tokens</label>
                             <input type="number" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity"></input>
                         </div>
                         <div className="form-group">
-                            <label for="strikePrice">Strike price per base token in quote token</label>
+                            <label htmlFor="strikePrice">Strike price per base token in quote token</label>
                             <input type="number" className="form-control" required id="strikePrice" name="strikePrice" placeholder="Strike prices"></input>
                         </div>
 
                         <div className="form-group">
-                            <label for="date">Expiry Date</label><br></br>
+                            <label htmlFor="date">Expiry Date</label><br></br>
                             <DatePicker
                                 selected={this.state.expiryDate || new Date()}
                                 onChange={this.handleDateChange}

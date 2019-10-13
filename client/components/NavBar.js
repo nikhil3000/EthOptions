@@ -1,6 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-import { pureStakeKey } from '../config';
 
 export default class NavBar extends React.Component {
     constructor(props) {
