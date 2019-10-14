@@ -4,7 +4,7 @@ import CreatableSelect from 'react-select/creatable';
 import DatePicker from "react-datepicker";
 import { data } from '../data'
 import "react-datepicker/dist/react-datepicker.css";
-import {faucetABI, faucetAddress} from '../config'
+import { faucetABI, faucetAddress } from '../config'
 
 
 export default class Post extends React.Component {
@@ -18,7 +18,7 @@ export default class Post extends React.Component {
         this.state = {
             baseTokenObject: undefined,
             quoteTokenObject: undefined,
-            expiryDate:undefined
+            expiryDate: undefined
         }
     }
 
@@ -31,45 +31,57 @@ export default class Post extends React.Component {
         e.preventDefault();
         const quantity = e.target.elements.quantity.value.trim();
         const strikePrice = e.target.elements.strikePrice.value.trim();
-        if(this.state.baseTokenObject && this.state.quoteTokenObject && this.state.expiryDate)
-        {
-            console.log(quantity);
-            console.log(strikePrice);
-            console.log(this.state.baseTokenObject);
-            console.log(this.state.quoteTokenObject);
-            console.log(this.state.expiryDate);
-            var metamaskAccount2 = "0x0456A48AcBD784A586B9A29D425f6D444e2063ad";
-            const faucetContract = new this.props.web3.eth.Contract(JSON.parse(faucetABI),faucetAddress);       
-            faucetContract.methods.approve(metamaskAccount2,500).send({from:this.props.web3.givenProvider.selectedAddress},(err,data)=>{
-                console.log("err",err);
-                console.log("data",data);
-            }) 
+        if (this.state.baseTokenObject && this.state.quoteTokenObject && this.state.expiryDate) {
+            var baseTokenAddress = this.state.baseTokenObject.value;
+            var quoteTokenAddress = this.state.quoteTokenObject.value;
+            var expiryDateTimestamp = this.state.expiryDate.setHours(17, 0, 0, 0)/1000;
+            var metamaskAccount2 = "0x0456A48AcBD784A586B9A29D425f6D444e2063ad";    //will be replaced by options contract address
+            //faucet address should be replaced by base token address, currently faucer is acting as the base token 
+            const faucetContract = new this.props.web3.eth.Contract(JSON.parse(faucetABI), faucetAddress);
+            faucetContract.methods.approve(metamaskAccount2, quantity)
+                .send({ from: this.props.web3.givenProvider.selectedAddress }, (err, data) => {
+                    if (err) {
+                        console.log("err", err);
+                        window.alert("Allowance needs to be provided for the base token to create order");
+                    }
+                    else {
+                        console.log("data", data);
+                        var order = {
+                            quantity,
+                            strikePrice,
+                            baseTokenAddress,
+                            quoteTokenAddress,
+                            expiryDateTimestamp
+                        }
+                        axios.post('http://localhost:5000/postOrder', order)
+                        .then(res => {
+                            console.log(res);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+
+                    }
+                })
 
 
-            // axios.post('http://localhost:5000/postGig', Gigbody)
-            // .then(res => {
-            //     console.log(res);
-            // })
-            // .catch(err => {
-            //     console.log(err);
-            // })
         }
-        else{
+        else {
             window.alert("Choose some value for all the fields.");
-        }   
+        }
     }
 
     handleBaseTokenChange(baseTokenObject) {
-        this.setState({ baseTokenObject: baseTokenObject});
+        this.setState({ baseTokenObject: baseTokenObject });
     }
 
     handleQuoteTokenChange(quoteTokenObject) {
-        this.setState({ quoteTokenObject: quoteTokenObject});
+        this.setState({ quoteTokenObject: quoteTokenObject });
     }
 
 
     handleDateChange(date) {
-        this.setState({expiryDate:date});
+        this.setState({ expiryDate: date });
     }
 
     render() {

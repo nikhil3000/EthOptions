@@ -31,14 +31,11 @@ app.use(bodyParser.json());
 require('./Models/Gig')
 const Gig = mongoose.model('Gig');
 
-
-app.post('/postData', (req, res) => {
-
+app.post('/postOrder', (req, res) => {
+    console.log(req.body);
 })
 
-app.listen(port, () => {
-    console.log(`server started at port ${port}`);
-})
+
 
 
 
@@ -47,3 +44,7 @@ app.get("*", (req, res) => {
 });
 
 var port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+    console.log(`server started at port ${port}`);
+})
