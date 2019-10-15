@@ -63,8 +63,6 @@ export default class Post extends React.Component {
 
                     }
                 })
-
-
         }
         else {
             window.alert("Choose some value for all the fields.");
