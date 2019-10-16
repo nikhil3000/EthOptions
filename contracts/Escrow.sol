@@ -40,10 +40,11 @@ contract Escrow is Ownable{
      * @dev Withdraw accumulated balance for a payee.
      * @param payee The address to which funds will be transferred to.
      */
-    function withdraw(address payer, address payable payee,address token, uint256 amount) public onlyOwner{
+    function withdraw(address payer, address payee,address token, uint256 amount) public onlyOwner returns(bool){
         require(amount <= escrowBalance[payer][token], "Insufficient funds");
         require(IERC20(token).transfer(payee,amount));
         escrowBalance[payer][token] = escrowBalance[payer][token].sub(amount);
+        return true;
         // emit Withdrawn(payee, amount);
     }
 }
