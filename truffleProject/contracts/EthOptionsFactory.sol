@@ -84,6 +84,14 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         return (tempOption.maker,tempOption.taker,tempOption.qty,tempOption.strikePrice,tempOption.baseToken,tempOption.quoteToken,tempOption.expiry);
     }
     
+    function getEscrowAddress() public view returns (address){
+        return EscrowAddress;
+    }
+    
+    function getPriceOracleAddress() public view returns(address){
+        return priceOracleAddress;
+    }
+    
     function _checkEscrowBalance(address maker, address baseToken, uint256 qty) internal view{
         require(Escrow(EscrowAddress).depositsOf(maker,baseToken) >= qty, "Insufficient base tokens by maker in escrow account");
     }
@@ -109,6 +117,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
      
     function _getPrice(address baseToken, address quoteToken) internal returns(uint256)
     {
+        require(priceOracleAddress != address(0),"Price Oracle Address is not set");
         uint256 basePrice = IOracle(priceOracleAddress).getPrice(baseToken, now); 
         uint256 quotePrice = IOracle(priceOracleAddress).getPrice(quoteToken, now);
         uint256 price = basePrice.div(quotePrice);

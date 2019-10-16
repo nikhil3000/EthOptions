@@ -4,7 +4,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
 
-contract ERC20 is IERC20 {
+contract TokenA is IERC20 {
+    using SafeMath for uint256;
     uint256 totalSupply_ = 1000000;
     string public name = "NikhilToken";
     uint8 public decimals = 18;

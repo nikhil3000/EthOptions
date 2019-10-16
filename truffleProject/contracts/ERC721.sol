@@ -80,6 +80,10 @@ contract ERC721 is ERC165, IERC721, Ownable {
         EthOptionsFactory = factory;
     }
     
+    function getFactoryAddress() public view returns (address){
+        return EthOptionsFactory;
+    }
+    
     /**
      * @dev Gets the balance of the specified tokenID.
      * @param tokenID uint256 to query the count of that token.

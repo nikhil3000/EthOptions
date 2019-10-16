@@ -1,0 +1,13 @@
+{
+  "name": "EthOptions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@openzeppelin/contracts": "^2.3.0",
+    "ethereumjs-testrpc": "^6.0.3",
+    "ganache-cli": "^6.7.0",
+    "global": "^4.4.0",
+    "truffle": "^5.0.40"
+  }
+}

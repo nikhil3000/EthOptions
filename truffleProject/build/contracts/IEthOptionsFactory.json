@@ -1,0 +1,230 @@
+{
+  "contractName": "IEthOptionsFactory",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getLatestTokenId",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getLatestTokenId\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{},\"notice\":\"Escrow contract for Token Interface \"}},\"settings\":{\"compilationTarget\":{\"/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IEthOptionsFactory.sol\":\"IEthOptionsFactory\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IEthOptionsFactory.sol\":{\"keccak256\":\"0x36f222ae5b9a2e64944dc3f7550eb8d0d0391e1b1d0f47b7ffc5e19b51a37bcc\",\"urls\":[\"bzzr://cbc02a0568d4c0bee873e88bda11df0d55cb30eb1831aca698bda51a7b15eb35\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.5.0;\n\n/// Escrow contract for Token Interface \ncontract IEthOptionsFactory {\n    function getLatestTokenId() public view returns(uint256);\n}",
+  "sourcePath": "/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IEthOptionsFactory.sol",
+  "ast": {
+    "absolutePath": "/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IEthOptionsFactory.sol",
+    "exportedSymbols": {
+      "IEthOptionsFactory": [
+        2522
+      ]
+    },
+    "id": 2523,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2516,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:10"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "Escrow contract for Token Interface ",
+        "fullyImplemented": false,
+        "id": 2522,
+        "linearizedBaseContracts": [
+          2522
+        ],
+        "name": "IEthOptionsFactory",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 2521,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLatestTokenId",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2517,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "125:2:10"
+            },
+            "returnParameters": {
+              "id": 2520,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2519,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2521,
+                  "src": "148:7:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2518,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "148:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "147:9:10"
+            },
+            "scope": 2522,
+            "src": "100:57:10",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 2523,
+        "src": "66:93:10"
+      }
+    ],
+    "src": "0:159:10"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IEthOptionsFactory.sol",
+    "exportedSymbols": {
+      "IEthOptionsFactory": [
+        2522
+      ]
+    },
+    "id": 2523,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2516,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:10"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": "Escrow contract for Token Interface ",
+        "fullyImplemented": false,
+        "id": 2522,
+        "linearizedBaseContracts": [
+          2522
+        ],
+        "name": "IEthOptionsFactory",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 2521,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getLatestTokenId",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2517,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "125:2:10"
+            },
+            "returnParameters": {
+              "id": 2520,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2519,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2521,
+                  "src": "148:7:10",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2518,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "148:7:10",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "147:9:10"
+            },
+            "scope": 2522,
+            "src": "100:57:10",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 2523,
+        "src": "66:93:10"
+      }
+    ],
+    "src": "0:159:10"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.8+commit.23d335f2.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2019-10-16T14:14:47.790Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {},
+    "notice": "Escrow contract for Token Interface "
+  }
+}
