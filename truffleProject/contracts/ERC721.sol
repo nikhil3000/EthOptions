@@ -17,7 +17,7 @@ contract ERC721 is ERC165, IERC721, Ownable {
     using SafeMath for uint256;
     using Address for address;
     using Counters for Counters.Counter;
-    
+    event SenderAddress(uint256, address);
     address private EthOptionsFactory; 
 
     // Equals to `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`
@@ -78,6 +78,8 @@ contract ERC721 is ERC165, IERC721, Ownable {
      */
     function setFactory(address factory) public onlyOwner {
         EthOptionsFactory = factory;
+        emit SenderAddress(3,factory);
+
     }
     
     function getFactoryAddress() public view returns (address){
@@ -234,7 +236,7 @@ contract ERC721 is ERC165, IERC721, Ownable {
      * @return A boolean that indicates if the operation was successful.
      */
     function mint(address to, uint256 tokenId, uint256 qty) public returns (bool) {
-        require(msg.sender == EthOptionsFactory);
+        require(msg.sender == EthOptionsFactory, "Only option factory can mint tokens");
         _mint(to, tokenId,qty);
         return true;
     }

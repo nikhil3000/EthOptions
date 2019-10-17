@@ -24,7 +24,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
      uint256 private tokenID;
      address private optionTokenAddress; //erc721.sol
      address private priceOracleAddress;
-     
+     event idEvent(uint256);
      struct option {
         //  uint256 tokenID;
          address maker;
@@ -33,12 +33,13 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
          uint256 strikePrice;
          address baseToken;
          address quoteToken;
+         uint256 premium;
          uint256 expiry;
      } 
      
      //tokenid to object mapping
      mapping(uint256 => option) optionList;  
-     
+    
      constructor(address _optionAddressToken) public{
          optionTokenAddress = _optionAddressToken;
          EscrowAddress = address(new Escrow());
@@ -49,15 +50,16 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
          priceOracleAddress = _priceOracleAddress;
      }
      
-    function createOption( address _maker, address _taker, uint256 _qty, uint256 _strikePrice, address _baseToken, address _quoteToken,uint256 _expiry) public{
+    function createOption( address _maker, address _taker, uint256 _qty, uint256 _strikePrice, address _baseToken, address _quoteToken,uint256 _premium, uint256 _expiry) public returns(uint256){
         //tranfering base tokens to escrow
         _transferToEscrow(_baseToken,_qty,_maker); //I am hoping that require inside the function will prevent it from proceeding. Needs to check this
         //transfering premium to maker
-        require(_transferERC20(_quoteToken,_qty,_taker,_maker), "Failed at transfer of premium");
+        require(_transferERC20(_quoteToken,_premium,_taker,_maker), "Failed at transfer of premium");
         //TODO: Create option token and transfer them to taker.
         IERC721(optionTokenAddress).mint(_taker, tokenID, _qty);
-        option memory tempOption =  option(_maker,_taker,_qty,_strikePrice,_baseToken,_quoteToken,_expiry);
+        option memory tempOption =  option(_maker,_taker,_qty,_strikePrice,_baseToken,_quoteToken,_premium,_expiry);
         optionList[tokenID] = tempOption;
+        emit idEvent(tokenID);
         tokenID = tokenID.add(1);
     }
     
@@ -79,9 +81,9 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         return tokenID;
     }
     
-    function getOptionDetails(uint256 tokenId) public view returns(address,address,uint256,uint256,address,address,uint256){
+    function getOptionDetails(uint256 tokenId) public view returns(address,address,uint256,uint256,address,address,uint256,uint256){
         option memory tempOption = optionList[tokenId];
-        return (tempOption.maker,tempOption.taker,tempOption.qty,tempOption.strikePrice,tempOption.baseToken,tempOption.quoteToken,tempOption.expiry);
+        return (tempOption.maker,tempOption.taker,tempOption.qty,tempOption.strikePrice,tempOption.baseToken,tempOption.quoteToken,tempOption.premium,tempOption.expiry);
     }
     
     function getEscrowAddress() public view returns (address){
@@ -129,9 +131,10 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
     }
     
     
-    function _transferToEscrow(address token, uint256 amount, address payer) internal{
+    function _transferToEscrow(address token, uint256 amount, address payer) internal returns (bool){
          require(_transferERC20(token,amount,payer,EscrowAddress), "Transfer of tokens to escrow failed");
          Escrow(EscrowAddress).deposit(payer,token,amount);
+         return true;
     }
      
      function _transferERC20(address token,uint256 amount,address _from, address _to) internal returns (bool){
