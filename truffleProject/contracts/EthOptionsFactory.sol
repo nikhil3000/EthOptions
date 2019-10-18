@@ -25,6 +25,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
      address private optionTokenAddress; //erc721.sol
      address private priceOracleAddress;
      event idEvent(uint256);
+     event Price(uint256,uint256);
      struct option {
         //  uint256 tokenID;
          address maker;
@@ -66,15 +67,28 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
     function exerciseOption(uint256 _tokenId,uint256 _qty) public{
         option memory tempOption = optionList[_tokenId];
         require(_canBeExercised(_tokenId,_qty), "Option cannot be exercised");
-        uint256 amount = tempOption.strikePrice.mul(_qty);
+        uint256 amount = tempOption.strikePrice.mul(_qty).div(10 ** 18);
         _checkAllowance(amount, tempOption.quoteToken, tempOption.taker);
-        _checkEscrowBalance(tempOption.maker,tempOption.baseToken,tempOption.qty);
+        _checkEscrowBalance(tempOption.maker,tempOption.baseToken,_qty);
         _burnOptionTokens(_tokenId,_qty);
         require(IERC20(tempOption.quoteToken).transferFrom(tempOption.taker,tempOption.maker,amount),"Transfer of quote token failed");
         _transferFromEscrow(tempOption.baseToken, _qty, tempOption.taker, tempOption.maker);
-        optionList[_tokenId].qty.sub(_qty);
+        emit Price(1,amount);
+        optionList[_tokenId].qty = optionList[_tokenId].qty.sub(_qty);
     }
      
+    function exerciseOption2(uint256 _tokenId,uint256 _qty) public{
+        option memory tempOption = optionList[_tokenId];
+        require(_canBeExercised(_tokenId,_qty), "Option cannot be exercised");
+        uint256 amount = tempOption.strikePrice.mul(_qty).div(10 ** 18);
+        _checkAllowance(amount, tempOption.quoteToken, tempOption.taker);
+        _checkEscrowBalance(tempOption.maker,tempOption.baseToken,_qty);
+        _burnOptionTokens(_tokenId,_qty);
+        require(IERC20(tempOption.quoteToken).transferFrom(tempOption.taker,tempOption.maker,amount),"Transfer of quote token failed");
+        _transferFromEscrow(tempOption.baseToken, _qty, tempOption.taker, tempOption.maker);
+        optionList[_tokenId].qty = optionList[_tokenId].qty.sub(_qty);
+    }
+    
     function getLatestTokenId() public view returns(uint256){
         require(msg.sender == optionTokenAddress,"Non whitelisted address cannot update token ID");
         tokenID.add(1);
@@ -107,22 +121,26 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         require(IERC20(token).allowance( owner,address(this)) >= amount,"Insufficient Allowance");
     }
     
-    function _canBeExercised(uint256 _tokenId,uint256 _qty) internal returns (bool){
+    function _canBeExercised(uint256 _tokenId,uint256 _qty) public returns (bool){
         option memory tempOption = optionList[_tokenId];
         require(_tokenId < tokenID && _tokenId > 0, "invalid tokenID");
         require(msg.sender == tempOption.taker, "Only taker can excercise the option");
         require(_qty <= tempOption.qty, "Option can't be exercised for quantity greater than it was issued for.");
         require(now < tempOption.expiry, "Option has already expired");
         require (_getPrice(tempOption.baseToken,tempOption.quoteToken) > tempOption.strikePrice,"Base Token price has still not crossed the strike price");
+        // _getPrice(tempOption.baseToken,tempOption.quoteToken);
         return true;
     }
      
     function _getPrice(address baseToken, address quoteToken) internal returns(uint256)
     {
         require(priceOracleAddress != address(0),"Price Oracle Address is not set");
-        uint256 basePrice = IOracle(priceOracleAddress).getPrice(baseToken, now); 
+        uint256 basePrice = IOracle(priceOracleAddress).getPrice(baseToken, now).mul(10 ** 18);  // to support decimal strike price
         uint256 quotePrice = IOracle(priceOracleAddress).getPrice(quoteToken, now);
         uint256 price = basePrice.div(quotePrice);
+        // emit Price(basePrice,quotePrice);
+        // emit Price(quotePrice,basePrice);
+        // emit Price(1,price);
         return (price);
     }
     

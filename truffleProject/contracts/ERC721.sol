@@ -78,8 +78,6 @@ contract ERC721 is ERC165, IERC721, Ownable {
      */
     function setFactory(address factory) public onlyOwner {
         EthOptionsFactory = factory;
-        emit SenderAddress(3,factory);
-
     }
     
     function getFactoryAddress() public view returns (address){
@@ -104,7 +102,6 @@ contract ERC721 is ERC165, IERC721, Ownable {
     function ownerOf(uint256 tokenId) public view returns (address) {
         address owner = _tokenOwner[tokenId];
         require(owner != address(0), "ERC721: owner query for nonexistent token");
-
         return owner;
     }
 
@@ -119,7 +116,6 @@ contract ERC721 is ERC165, IERC721, Ownable {
     function approve(address to, uint256 tokenId) public {
         address owner = ownerOf(tokenId);
         require(to != owner, "ERC721: approval to current owner");
-
         require(msg.sender == owner || isApprovedForAll(owner, msg.sender),
             "ERC721: approve caller is not owner nor approved for all"
         );
@@ -174,7 +170,6 @@ contract ERC721 is ERC165, IERC721, Ownable {
     function transferFrom(address from, address to, uint256 tokenId) public {
         //solhint-disable-next-line max-line-length
         require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");
-
         _transferFrom(from, to, tokenId);
     }
 
@@ -286,8 +281,13 @@ contract ERC721 is ERC165, IERC721, Ownable {
     
     function burn(uint256 tokenId, uint256 qty) public {
         require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721Burnable: caller is not owner nor approved");
+        require(_tokenIdCount[tokenId] >= qty, "Trying to burn more tokens than supply");
+        if(_tokenIdCount[tokenId] == qty)
         _burn(tokenId);
-        _tokenIdCount[tokenId] = _tokenIdCount[tokenId].sub(qty);
+        else{
+           _tokenIdCount[tokenId] = _tokenIdCount[tokenId].sub(qty); 
+        }
+        
     }
 
     /**
