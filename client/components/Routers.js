@@ -6,6 +6,9 @@ import Post from './Post';
 import NavBar from './NavBar';
 import Web3 from 'web3';
 import {rpcURL} from '../config';
+import Orderbook from './Orderbook';
+import Order from './order';
+import axios from 'axios';
 
 export const history = createBrowserHistory();
 
@@ -15,12 +18,24 @@ export default class Routers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            web3 : undefined
+            web3 : undefined,
+            data : undefined
         }
     }
 
     componentWillMount() {
 
+        axios.get('http://localhost:5000/getOrder').then(response => {
+            console.log(response.data);
+            for(var i=0;i<response.data.length;i++) {
+                var date = new Date(response.data[i].expiry * 1000).toString();
+                response.data[i].expiryString = date; 
+            };
+            
+            this.setState({
+                data: response.data
+            })
+        })
         let web3js;
         if (window.ethereum) {
           // metamask is available
@@ -48,7 +63,8 @@ export default class Routers extends React.Component {
                     <Switch>
 
                         <Route path="/post" render={()=> <Post web3={this.state.web3}/>}></Route>
-                        <Route path="/orderbook" render={()=> <Orderbook />}></Route>
+                        <Route path="/orderbook" render={()=> <Orderbook history={history} data={this.state.data}/>}></Route>
+                         <Route path="/order/:id" render={(props) => <Order history={history} data={this.state.data && this.state.data[props.match.params.id]} id={props.match.params.id}/>} />
                         {/*<Route path="/" exact={true} render={() => <QuestionsList history={history} factoryContractUport={this.state.factoryContractUport} web3={this.state.web3} />} />
                         <Route path="/poll/:address" render={(props) => <Poll history={history} web3={this.state.web3} address={props.match.params.address} />} />
                         <Route path="/register" render={() => <Register history={history} factoryContractUport={this.state.factoryContractUport} />} />
