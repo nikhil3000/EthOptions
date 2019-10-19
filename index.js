@@ -53,7 +53,15 @@ app.post('/postOrder', (req, res) => {
     })
 })
 
-
+app.get('/getOrder',(req,res)=>{
+    Order.find({})
+    .then(orderList=>{
+        if(orderList.length > 0)
+        res.send(orderList);
+        else
+        res.send("No order posted yet");
+    })
+})
 
 
 
