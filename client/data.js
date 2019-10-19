@@ -1,6 +1,10 @@
+import { baseToken,quoteToken} from '../address';
+
 module.exports = {
     data: [
         {value: '0', label: ''},
+        {value: baseToken, label: 'DemoBaseToken'},
+        {value : quoteToken, label: 'DemoQuoteToken'},
         { value: '0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3', label: 'LEO' },
         { value: '0x514910771af9ca656af840dff83e8264ecf986ca', label: 'LINK' },
         { value: '0x6f259637dcd74c767781e37bc6133cd6a68aa161', label: 'HT' },

@@ -5,7 +5,7 @@ const app = express();
 var mongoose = require('mongoose');
 var config = require('./config');
 const path = require('path');
-
+ 
 
 //Mongoose connection
 mongoose.connect(config.db.mongoURI, { useNewUrlParser: true })
@@ -28,11 +28,29 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-require('./Models/Gig')
-const Gig = mongoose.model('Gig');
+require('./Models/Order')
+const Order = mongoose.model('orderSchema'); 
 
 app.post('/postOrder', (req, res) => {
     console.log(req.body);
+    var obj = new Order({
+    maker:req.body.maker,
+    qty:req.body.quantity,
+    strikePrice:req.body.strikePrice,
+    baseToken: req.body.baseTokenAddress,
+    quoteToken: req.body.quoteTokenAddress,
+    expiry:req.body.expiryDateTimestamp,
+    premium: req.body.premium
+    })
+    obj.save()
+    .then(()=>{
+        console.log("obj saved");
+        res.send('orderSaved');
+    })
+    .catch(err=>{
+        console.log(err);
+        res.send('failed');
+    })
 })
 
 

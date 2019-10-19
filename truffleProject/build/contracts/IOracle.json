@@ -36,14 +36,14 @@
     "absolutePath": "/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IOracle.sol",
     "exportedSymbols": {
       "IOracle": [
-        2617
+        2736
       ]
     },
-    "id": 2618,
+    "id": 2737,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2607,
+        "id": 2726,
         "literals": [
           "solidity",
           "^",
@@ -59,9 +59,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 2617,
+        "id": 2736,
         "linearizedBaseContracts": [
-          2617
+          2736
         ],
         "name": "IOracle",
         "nodeType": "ContractDefinition",
@@ -69,22 +69,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2616,
+            "id": 2735,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getPrice",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2612,
+              "id": 2731,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2609,
+                  "id": 2728,
                   "name": "base",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2616,
+                  "scope": 2735,
                   "src": "71:12:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -93,7 +93,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2608,
+                    "id": 2727,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "71:7:12",
@@ -108,10 +108,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 2611,
+                  "id": 2730,
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2616,
+                  "scope": 2735,
                   "src": "85:17:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -120,7 +120,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2610,
+                    "id": 2729,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "85:7:12",
@@ -136,15 +136,15 @@
               "src": "70:33:12"
             },
             "returnParameters": {
-              "id": 2615,
+              "id": 2734,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2614,
+                  "id": 2733,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2616,
+                  "scope": 2735,
                   "src": "119:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -153,7 +153,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2613,
+                    "id": 2732,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "119:7:12",
@@ -168,14 +168,14 @@
               ],
               "src": "118:9:12"
             },
-            "scope": 2617,
+            "scope": 2736,
             "src": "53:75:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2618,
+        "scope": 2737,
         "src": "25:105:12"
       }
     ],
@@ -185,14 +185,14 @@
     "absolutePath": "/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IOracle.sol",
     "exportedSymbols": {
       "IOracle": [
-        2617
+        2736
       ]
     },
-    "id": 2618,
+    "id": 2737,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2607,
+        "id": 2726,
         "literals": [
           "solidity",
           "^",
@@ -208,9 +208,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 2617,
+        "id": 2736,
         "linearizedBaseContracts": [
-          2617
+          2736
         ],
         "name": "IOracle",
         "nodeType": "ContractDefinition",
@@ -218,22 +218,22 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2616,
+            "id": 2735,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getPrice",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2612,
+              "id": 2731,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2609,
+                  "id": 2728,
                   "name": "base",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2616,
+                  "scope": 2735,
                   "src": "71:12:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -242,7 +242,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2608,
+                    "id": 2727,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "71:7:12",
@@ -257,10 +257,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 2611,
+                  "id": 2730,
                   "name": "timestamp",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2616,
+                  "scope": 2735,
                   "src": "85:17:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -269,7 +269,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2610,
+                    "id": 2729,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "85:7:12",
@@ -285,15 +285,15 @@
               "src": "70:33:12"
             },
             "returnParameters": {
-              "id": 2615,
+              "id": 2734,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2614,
+                  "id": 2733,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2616,
+                  "scope": 2735,
                   "src": "119:7:12",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -302,7 +302,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2613,
+                    "id": 2732,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "119:7:12",
@@ -317,14 +317,14 @@
               ],
               "src": "118:9:12"
             },
-            "scope": 2617,
+            "scope": 2736,
             "src": "53:75:12",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2618,
+        "scope": 2737,
         "src": "25:105:12"
       }
     ],
@@ -336,7 +336,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-10-17T19:57:24.172Z",
+  "updatedAt": "2019-10-19T08:34:12.323Z",
   "devdoc": {
     "methods": {}
   },

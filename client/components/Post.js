@@ -4,7 +4,10 @@ import CreatableSelect from 'react-select/creatable';
 import DatePicker from "react-datepicker";
 import { data } from '../data'
 import "react-datepicker/dist/react-datepicker.css";
-import { faucetABI, faucetAddress } from '../config'
+import { ERC20Abi } from '../config';
+import { factoryAddress } from '../../address';
+const BigNumber = require('bignumber.js');
+
 
 
 export default class Post extends React.Component {
@@ -24,22 +27,28 @@ export default class Post extends React.Component {
 
     componentDidMount() {
         console.log(this.props.web3.givenProvider.selectedAddress);
+        console.log(factoryAddress);
+        // console.log(ERC20Abi);
     }
 
+    pow(input) {
+        return new BigNumber(input).times(new BigNumber(10).pow(18));
+    }
     handlePostFormSubmit(e) {
 
         e.preventDefault();
         const quantity = e.target.elements.quantity.value.trim();
         const strikePrice = e.target.elements.strikePrice.value.trim();
+        const premium = e.target.elements.premium.value.trim();
         if (this.state.baseTokenObject && this.state.quoteTokenObject && this.state.expiryDate) {
+            console.log("inside if");
             var baseTokenAddress = this.state.baseTokenObject.value;
             var quoteTokenAddress = this.state.quoteTokenObject.value;
-            var expiryDateTimestamp = this.state.expiryDate.setHours(17, 0, 0, 0)/1000;
-            var metamaskAccount2 = "0x0456A48AcBD784A586B9A29D425f6D444e2063ad";    //will be replaced by options contract address
-            //faucet address should be replaced by base token address, currently faucer is acting as the base token 
-            const faucetContract = new this.props.web3.eth.Contract(JSON.parse(faucetABI), faucetAddress);
-            faucetContract.methods.approve(metamaskAccount2, quantity)
-                .send({ from: this.props.web3.givenProvider.selectedAddress }, (err, data) => {
+            var expiryDateTimestamp = this.state.expiryDate.setHours(17, 0, 0, 0) / 1000;
+            var tokenContract = new this.props.web3.eth.Contract(JSON.parse(ERC20Abi), baseTokenAddress);
+            var maker = this.props.web3.givenProvider.selectedAddress;
+            tokenContract.methods.approve(factoryAddress.toString(), this.pow(quantity).toString())
+                .send({ from: maker }, (err, data) => {
                     if (err) {
                         console.log("err", err);
                         window.alert("Allowance needs to be provided for the base token to create order");
@@ -47,19 +56,24 @@ export default class Post extends React.Component {
                     else {
                         console.log("data", data);
                         var order = {
+                            maker,
                             quantity,
                             strikePrice,
                             baseTokenAddress,
                             quoteTokenAddress,
+                            premium,
                             expiryDateTimestamp
                         }
                         axios.post('http://localhost:5000/postOrder', order)
-                        .then(res => {
-                            console.log(res);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        })
+                            .then(res => {
+                                if(order.data == "orderSaved")
+                                window.alert("Order saved");
+                                else
+                                window.alert("failed to save order");
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
 
                     }
                 })
@@ -114,15 +128,19 @@ export default class Post extends React.Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="noOfTokens">Number of Tokens</label>
-                            <input type="number" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity"></input>
+                            <input type="number" step="0.01" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity"></input>
                         </div>
                         <div className="form-group">
                             <label htmlFor="strikePrice">Strike price per base token in quote token</label>
-                            <input type="number" className="form-control" required id="strikePrice" name="strikePrice" placeholder="Strike prices"></input>
+                            <input type="number" step="0.01" className="form-control" required id="strikePrice" name="strikePrice" placeholder="Strike prices"></input>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="premiumAmount">Premium To be paid by taker</label>
+                            <input type="number" step="0.01" className="form-control" required id="premiumAmount" name="premium" placeholder="Premium Amount"></input>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="date">Expiry Date</label><br></br>
+                            <label htmlFor="date">Expiry Date : Time has been fixed to 5pm(IST)</label><br></br>
                             <DatePicker
                                 selected={this.state.expiryDate || new Date()}
                                 onChange={this.handleDateChange}

@@ -54,7 +54,7 @@ contract('EthOptionsFactory', accounts => {
 
     beforeEach(async () => {
 
-    });
+    }); 
 
     // quote = 5000000000000000000
     // base, = 340000000000000000000

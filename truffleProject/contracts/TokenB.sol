@@ -17,7 +17,7 @@ contract TokenB is IERC20 {
 
     uint256 private _totalSupply;
 
-    /**
+    /**100000000000000000000000
      * @dev See `IERC20.totalSupply`.
      */
     function totalSupply() public view returns (uint256) {

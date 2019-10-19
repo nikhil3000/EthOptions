@@ -1,0 +1,5 @@
+module.exports = {
+baseToken : '0x184851afc24a3E3C38b1462c775508023A4F61e4',
+ quoteToken : '0xb1a24ADDe1E4a2583b04a1eEE7Ff1336BDE3c3A2',
+ factoryAddress: '0x12DDC0A41c83E36957117c881D402A1929a87846' 
+}
