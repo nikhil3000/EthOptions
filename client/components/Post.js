@@ -66,7 +66,7 @@ export default class Post extends React.Component {
                         }
                         axios.post('http://localhost:5000/postOrder', order)
                             .then(res => {
-                                if(order.data == "orderSaved")
+                                if(res.data == "orderSaved")
                                 window.alert("Order saved");
                                 else
                                 window.alert("failed to save order");
