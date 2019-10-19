@@ -48,6 +48,7 @@ export default class Routers extends React.Component {
                     <Switch>
 
                         <Route path="/post" render={()=> <Post web3={this.state.web3}/>}></Route>
+                        <Route path="/orderbook" render={()=> <Orderbook />}></Route>
                         {/*<Route path="/" exact={true} render={() => <QuestionsList history={history} factoryContractUport={this.state.factoryContractUport} web3={this.state.web3} />} />
                         <Route path="/poll/:address" render={(props) => <Poll history={history} web3={this.state.web3} address={props.match.params.address} />} />
                         <Route path="/register" render={() => <Register history={history} factoryContractUport={this.state.factoryContractUport} />} />
