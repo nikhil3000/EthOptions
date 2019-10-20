@@ -1,6 +1,6 @@
 import React from 'react';
-import { ERC20Abi, factoryABI } from '../config';
-import { factoryAddress } from '../../address';
+import { ERC20Abi, factoryABI,optionABI } from '../config';
+import { factoryAddress, optionAddress } from '../../address';
 import axios from 'axios';
 const BigNumber = require('bignumber.js');
 // const { parseLog } = require('ethereum-event-logs');
@@ -61,14 +61,50 @@ export default class Order extends React.Component {
                             .then(res => {
                                 console.log(res);
                             })
-
+                    }).catch(err=>{
+                        console.log(err);
                     })
                 }
             })
     }
 
-    handleExerciseOrder(){
-        
+    handleExerciseOrder(e){
+        e.preventDefault();
+        var qty = parseFloat(e.target.elements.quantity.value.trim());
+        var amount = this.pow(qty * this.props.data.strikePrice);
+        var quoteTokenContract = new this.props.web3.eth.Contract(ERC20Abi, this.props.data.quoteTokenAddress);
+        var taker = this.props.web3.givenProvider.selectedAddress;
+        var factoryContract = new this.props.web3.eth.Contract(factoryABI, factoryAddress);
+        var optionTokenContract = new this.props.web3.eth.Contract(optionABI, optionAddress);
+        var tokenId = new BigNumber(this.props.data.tokenId).toString();
+        quoteTokenContract.methods.approve(factoryAddress.toString(),amount)
+        .send({from:taker},(err,data)=>{
+            if (err) {
+                console.log("err", err);
+                window.alert("Allowance needs to be provided for the quote token to exercise option");
+            }
+            else
+            {
+                optionTokenContract.methods.approve(factoryAddress.toString(),tokenId)
+                .send({from:taker}, (err,data)=>{
+                    if (err) {
+                        console.log("err", err);
+                        window.alert("Allowance needs to be provided for the option tokens to exercise option");
+                    } 
+                    else {
+                        factoryContract.methods.exerciseOption(tokenId,this.pow(qty))
+                        .send({from:taker},(err,data)=>{
+                            if (err) {
+                                console.log("err", err);
+                            } 
+                            else {
+                                window.alert("success");
+                            }
+                        })
+                    }
+                })
+            }
+        })
     }
 
     render() {
@@ -86,7 +122,13 @@ export default class Order extends React.Component {
                     <button onClick={this.handleFillOrder} className="btn btn-primary">Fill Order</button>}
                 {this.props.data &&
                     this.props.data.taker == this.props.web3.givenProvider.selectedAddress &&
-                    <button onClick={this.handleExerciseOrder} className="btn btn-primary">Exercise Order</button>}
+                    <form onSubmit={this.handleExerciseOrder}>
+                        <div className="form-group">
+                            <label htmlFor="noOfTokens">Quantity</label>
+                            <input type="number" step="0.01" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity"></input>
+                        </div>
+                        <button type="submit" className="btn btn-primary">Exercise Order</button>
+                    </form>}
             </div>
         )
     }
