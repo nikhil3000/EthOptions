@@ -9,6 +9,8 @@ const OrderSchema = new Schema ({
     strikePrice:Number,
     baseToken: String,
     quoteToken: String,
+    baseTokenAddress : String,
+    quoteTokenAddress: String,
     expiry:Number,
     premium: Number
 })

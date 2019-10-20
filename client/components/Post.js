@@ -26,6 +26,10 @@ export default class Post extends React.Component {
     }
 
     componentDidMount() {
+        if(!this.props.web3.givenProvider.selectedAddress)
+        {
+            window.alert("Metamask address not available, please refresh");
+        }
         console.log(this.props.web3.givenProvider.selectedAddress);
         console.log(factoryAddress);
         // console.log(ERC20Abi);
@@ -42,6 +46,8 @@ export default class Post extends React.Component {
         const premium = e.target.elements.premium.value.trim();
         if (this.state.baseTokenObject && this.state.quoteTokenObject && this.state.expiryDate) {
             console.log("inside if");
+            var baseTokenLabel = this.state.baseTokenObject.label;
+            var quoteTokenLabel = this.state.quoteTokenObject.label;
             var baseTokenAddress = this.state.baseTokenObject.value;
             var quoteTokenAddress = this.state.quoteTokenObject.value;
             var expiryDateTimestamp = this.state.expiryDate.setHours(17, 0, 0, 0) / 1000;
@@ -61,6 +67,8 @@ export default class Post extends React.Component {
                             strikePrice,
                             baseTokenAddress,
                             quoteTokenAddress,
+                            baseTokenLabel,
+                            quoteTokenLabel,
                             premium,
                             expiryDateTimestamp
                         }

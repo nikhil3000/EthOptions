@@ -37,8 +37,10 @@ app.post('/postOrder', (req, res) => {
     maker:req.body.maker,
     qty:req.body.quantity,
     strikePrice:req.body.strikePrice,
-    baseToken: req.body.baseTokenAddress,
-    quoteToken: req.body.quoteTokenAddress,
+    baseTokenAddress: req.body.baseTokenAddress,
+    quoteTokenAddress: req.body.quoteTokenAddress,
+    baseToken: req.body.baseTokenLabel,
+    quoteToken:req.body.quoteTokenLabel,
     expiry:req.body.expiryDateTimestamp,
     premium: req.body.premium
     })

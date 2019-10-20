@@ -3,13 +3,10 @@ import React from 'react';
 export default class Order extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            expiry: undefined
-        }
     }
 
     componentDidUpdate() {
-        console.log(this.props.data);
+        console.log("order.js",this.props.data);
     }
     render() {
         return (

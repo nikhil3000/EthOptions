@@ -26,7 +26,7 @@ export default class Orderbook extends React.Component {
                             <th scope="col">Expiry Date</th>
                             <th scope="col">No. of Base Tokens</th>
                             <th scope="col">Premium</th>
-                            <th scope="col">Premium</th>
+                            <th scope="col">Buy Order</th>
                         </tr>
                     </thead>
                     <tbody>
