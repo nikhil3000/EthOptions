@@ -108,15 +108,6 @@ contract('EthOptionsFactory', accounts => {
                 console.log(events);
                 // console.log(events.args);
             });
-            // it('_canBeExercised: After one partial exercise', async () => {
-                
-            //     var qty = pow(5);
-            //     // const eventAbi = abi.find(({ name }) => name === 'Price');
-            //     // quoteToken.approve(EthOptionsFactory.address,amount,{from :taker,gas:4000000});
-            //     let tx = await EthOptionsFactory._canBeExercised(new BigNumber(1),qty, {from:taker, gas:4000000});
-            //     // const events = parseLog(tx.receipt.rawLogs, [ eventAbi ])
-            //     // console.log(events);   
-            // });
             it('exerciseOption : with left-over partial quantity, should pass', async () =>{
                 var amount = pow(5*40);
                 var qty = pow(5);
@@ -129,9 +120,6 @@ contract('EthOptionsFactory', accounts => {
                 // console.log(events.name);
                 // console.log(events.args);
             });
-            // 800
-            // 180
-            // 200
         });
          // it('createNewOption: Should create the new option -- fail because of zero address', async () => {
         //     await quoteToken.getTokens(new BigNumber(1000).times(new BigNumber(10).pow(18)), buyer);

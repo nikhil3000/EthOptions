@@ -76,18 +76,6 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         emit Price(1,amount);
         optionList[_tokenId].qty = optionList[_tokenId].qty.sub(_qty);
     }
-     
-    function exerciseOption2(uint256 _tokenId,uint256 _qty) public{
-        option memory tempOption = optionList[_tokenId];
-        require(_canBeExercised(_tokenId,_qty), "Option cannot be exercised");
-        uint256 amount = tempOption.strikePrice.mul(_qty).div(10 ** 18);
-        _checkAllowance(amount, tempOption.quoteToken, tempOption.taker);
-        _checkEscrowBalance(tempOption.maker,tempOption.baseToken,_qty);
-        _burnOptionTokens(_tokenId,_qty);
-        require(IERC20(tempOption.quoteToken).transferFrom(tempOption.taker,tempOption.maker,amount),"Transfer of quote token failed");
-        _transferFromEscrow(tempOption.baseToken, _qty, tempOption.taker, tempOption.maker);
-        optionList[_tokenId].qty = optionList[_tokenId].qty.sub(_qty);
-    }
     
     function getLatestTokenId() public view returns(uint256){
         require(msg.sender == optionTokenAddress,"Non whitelisted address cannot update token ID");

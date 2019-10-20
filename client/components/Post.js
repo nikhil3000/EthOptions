@@ -32,14 +32,12 @@ export default class Post extends React.Component {
         }
         console.log(this.props.web3.givenProvider.selectedAddress);
         console.log(factoryAddress);
-        // console.log(ERC20Abi);
+        // console.log(ERC20Abi)
     }
-
     pow(input) {
         return new BigNumber(input).times(new BigNumber(10).pow(18));
     }
     handlePostFormSubmit(e) {
-
         e.preventDefault();
         const quantity = e.target.elements.quantity.value.trim();
         const strikePrice = e.target.elements.strikePrice.value.trim();
