@@ -28,12 +28,13 @@ export default class Post extends React.Component {
     componentDidMount() {
         if(!this.props.web3.givenProvider.selectedAddress)
         {
-            window.alert("Metamask address not available, please refresh");
+            console.log("Metamask address not available, please refresh");
         }
         console.log(this.props.web3.givenProvider.selectedAddress);
         console.log(factoryAddress);
         // console.log(ERC20Abi)
     }
+
     pow(input) {
         return new BigNumber(input).times(new BigNumber(10).pow(18));
     }
@@ -49,7 +50,7 @@ export default class Post extends React.Component {
             var baseTokenAddress = this.state.baseTokenObject.value;
             var quoteTokenAddress = this.state.quoteTokenObject.value;
             var expiryDateTimestamp = this.state.expiryDate.setHours(17, 0, 0, 0) / 1000;
-            var tokenContract = new this.props.web3.eth.Contract(JSON.parse(ERC20Abi), baseTokenAddress);
+            var tokenContract = new this.props.web3.eth.Contract(ERC20Abi, baseTokenAddress);
             var maker = this.props.web3.givenProvider.selectedAddress;
             tokenContract.methods.approve(factoryAddress.toString(), this.pow(quantity).toString())
                 .send({ from: maker }, (err, data) => {

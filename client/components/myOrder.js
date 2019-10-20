@@ -2,7 +2,7 @@ import React from 'react';
 import OrderTable from './OrderTable';
 
 
-export default class Orderbook extends React.Component {
+export default class MyOrder extends React.Component {
 
     constructor(props) {
         super(props)
@@ -11,7 +11,7 @@ export default class Orderbook extends React.Component {
         }
     }
     componentDidMount() {
-        console.log("orderbook");
+        console.log(this.props.web3.givenProvider.selectedAddress);
     }
     render() {
         return (
@@ -32,7 +32,7 @@ export default class Orderbook extends React.Component {
                     <tbody>
                         {
                             this.props.data && this.props.data.map((record, index) => (
-                                <OrderTable key={index} record={record} index={index} history={this.props.history}/>
+                                this.props.web3.givenProvider.selectedAddress==record.taker && <OrderTable key={index} record={record} index={index} history={this.props.history}/>
                             ))
                         }
                     </tbody>

@@ -65,6 +65,24 @@ app.get('/getOrder',(req,res)=>{
     })
 })
 
+app.post('/updateOrder',(req,res)=>{
+    Order.findOne({_id:req.body._id})
+    .then(order=>{
+        console.log("order",order);
+        order.taker = req.body.taker;
+        order.tokenId = req.body.tokenId;
+        order.qty = 0;
+        order.save()
+        .then(()=>{
+            console.log("obj updated");
+            res.send('orderUpdated');
+        })
+        .catch(err=>{
+            console.log(err);
+            res.send('failed');
+        })
+    })
+})
 
 
 app.get("*", (req, res) => {

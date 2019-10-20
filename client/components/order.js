@@ -9,7 +9,8 @@ const BigNumber = require('bignumber.js');
 export default class Order extends React.Component {
     constructor(props) {
         super(props);
-        this.handleBuyOrder = this.handleBuyOrder.bind(this);
+        this.handleFillOrder = this.handleFillOrder.bind(this);
+        this.handleExerciseOrder = this.handleExerciseOrder.bind(this);
     }
 
     componentDidUpdate() {
@@ -20,9 +21,8 @@ export default class Order extends React.Component {
         return new BigNumber(input).times(new BigNumber(10).pow(18)).toString();
     }
 
-    handleBuyOrder(e) {
+    handleFillOrder(e) {
         e.preventDefault();
-        const orderQuantity = e.target.elements.orderQuantity.value.trim();
         var premium = this.pow(parseFloat(this.props.data.premium));
         var tokenContract = new this.props.web3.eth.Contract(ERC20Abi, this.props.data.quoteTokenAddress);
         var factoryContract = new this.props.web3.eth.Contract(factoryABI, factoryAddress);
@@ -37,7 +37,7 @@ export default class Order extends React.Component {
                     factoryContract.methods.createOption(
                         this.props.data.maker,
                         taker,
-                        this.pow(orderQuantity),
+                        this.pow(this.props.data.qty),
                         this.pow(this.props.data.strikePrice),
                         this.props.data.baseTokenAddress,
                         this.props.data.quoteTokenAddress,
@@ -46,46 +46,47 @@ export default class Order extends React.Component {
                     ).send({
                         from: taker,
                         gas: 4000000
-                    }).then(receipt=> {
-                            console.log(receipt);
-                            var id = receipt.events['idEvent'].returnValues[0];
-                            window.alert(`Token id is ${id}`);
-                            var data = this.props.data;
-                            var obj = {
-                                _id : data._id,
-                                taker : taker,
-                                tokenId : id
-                            }
-                            console.log(obj);
-                            axios.post('http://localhost:5000/updateOption',obj)
-                            .then(res=>{
+                    }).then(receipt => {
+                        console.log(receipt);
+                        var id = receipt.events['idEvent'].returnValues[0];
+                        window.alert(`Token id is ${id}`);
+                        var data = this.props.data;
+                        var obj = {
+                            _id: data._id,
+                            taker: taker,
+                            tokenId: id
+                        }
+                        console.log(obj);
+                        axios.post('http://localhost:5000/updateOrder', obj)
+                            .then(res => {
                                 console.log(res);
                             })
 
                     })
                 }
             })
-
-
     }
+
+    handleExerciseOrder(){
+        
+    }
+
     render() {
         return (
             <div>
                 <h2>Order</h2>
-                <p>Maker:{this.props.data && this.props.data.maker}</p>
                 <p>Base Token:{this.props.data && this.props.data.baseToken}</p>
                 <p>Quote Token:{this.props.data && this.props.data.quoteToken}</p>
-                <p>Maker : {this.props.data && this.props.data.maker}</p>
                 <p>Premium: {this.props.data && this.props.data.premium}</p>
                 <p>Strike Price: {this.props.data && this.props.data.strikePrice}</p>
                 <p>Expiry: {this.props.data && this.props.data.expiryString}</p>
-                <form onSubmit={this.handleBuyOrder}>
-                    <div className="form-group">
-                        <label htmlFor="orderQuantity">Order Quantity</label>
-                        <input type="number" step="0.01" className="form-control" required id="orderQuantity" name="orderQuantity" placeholder="No. of option tokens you want to buy"></input>
-                    </div>
-                    <button type="submit" className="btn btn-primary">Buy Order</button>
-                </form>
+                <p>Quantity: {this.props.data && this.props.data.qty}</p>
+                {this.props.data &&
+                    this.props.data.taker != this.props.web3.givenProvider.selectedAddress &&
+                    <button onClick={this.handleFillOrder} className="btn btn-primary">Fill Order</button>}
+                {this.props.data &&
+                    this.props.data.taker == this.props.web3.givenProvider.selectedAddress &&
+                    <button onClick={this.handleExerciseOrder} className="btn btn-primary">Exercise Order</button>}
             </div>
         )
     }

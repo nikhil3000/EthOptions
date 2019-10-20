@@ -11471,10 +11471,63 @@
       "links": {},
       "address": "0x184851afc24a3E3C38b1462c775508023A4F61e4",
       "transactionHash": "0x139adefd7ab3955162b44a5743fafa0d73a6666f8dc04e40f1fb8a8205d3d271"
+    },
+    "1571568727499": {
+      "events": {
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "value",
+              "type": "uint256"
+            }
+          ],
+          "name": "Transfer",
+          "type": "event",
+          "signature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+        },
+        "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "spender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "value",
+              "type": "uint256"
+            }
+          ],
+          "name": "Approval",
+          "type": "event",
+          "signature": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
+        }
+      },
+      "links": {},
+      "address": "0x6dd41EbF90fC8C025048A392584eb871b994979a",
+      "transactionHash": "0xbdced2737e3a37e4f7ab632c930248e9b0a82dc882f031338406c7b8171646e7"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-10-19T08:34:15.179Z",
+  "updatedAt": "2019-10-20T10:53:53.258Z",
   "devdoc": {
     "methods": {
       "_mint(address,uint256)": {

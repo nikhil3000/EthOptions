@@ -5,11 +5,16 @@ export default class OrderTable extends React.Component {
     constructor(props) {
         super(props);
         this.goToOrder = this.goToOrder.bind(this)
+        this.state = {
+            orderbook : true
+        }
 
     }
 
     componentDidMount() {
-        // console.log(this.props);
+        console.log(this.props.history.location.pathname);
+        if(this.props.history.location.pathname != '/orderbook')
+        this.setState({orderbook:false});
     }
     goToOrder(e) {
         e.preventDefault();
@@ -27,7 +32,8 @@ export default class OrderTable extends React.Component {
                 <td>{this.props.record.expiryString}</td>
                 <td>{this.props.record.qty}</td>
                 <td>{this.props.record.premium}</td>
-                <td><button variant="primary" onClick={this.goToOrder}>Fill Order</button></td>
+                {this.state.orderbook && <td><button variant="primary" onClick={this.goToOrder}>Fill Order</button></td>}
+                {!this.state.orderbook && <td><button variant="primary" onClick={this.goToOrder}>Exercise</button></td>}
             </tr>
         )
     }
