@@ -129,6 +129,9 @@ export default class Order extends React.Component {
                         </div>
                         <button type="submit" className="btn btn-primary">Exercise Order</button>
                     </form>}
+                <link rel='stylesheet' href='https://widget.kyber.network/v0.7.2/widget.css' />
+                <a href='https://widget.kyber.network/v0.7.2/?type=swap&mode=popup&lang=en&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald'class='kyber-widget-button theme-emerald theme-supported' name='KyberWidget - Powered by KyberNetwork' title='Pay with tokens'target='_blank'>Swap tokens</a>
+                <script async src='https://widget.kyber.network/v0.7.2/widget.js'></script>
             </div>
         )
     }
