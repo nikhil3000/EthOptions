@@ -1,5 +1,6 @@
 import React from 'react';
 import OrderTable from './OrderTable';
+import Table from 'react-bootstrap/Table';
 
 
 export default class Orderbook extends React.Component {
@@ -16,7 +17,7 @@ export default class Orderbook extends React.Component {
     render() {
         return (
             <div>
-                <table striped bordered hover >
+                <Table striped bordered hover >
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -37,7 +38,7 @@ export default class Orderbook extends React.Component {
                             )
                         }
                     </tbody>
-                </table>
+                </Table>
             </div>
         )
     }

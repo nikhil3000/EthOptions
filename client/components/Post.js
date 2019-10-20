@@ -4,7 +4,7 @@ import CreatableSelect from 'react-select/creatable';
 import DatePicker from "react-datepicker";
 import { data } from '../data'
 import "react-datepicker/dist/react-datepicker.css";
-import { ERC20Abi } from '../config';
+import {ERC20Abi} from '../config';
 import { factoryAddress } from '../../address';
 const BigNumber = require('bignumber.js');
 
