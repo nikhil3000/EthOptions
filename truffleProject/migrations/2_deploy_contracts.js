@@ -43,19 +43,23 @@ module.exports = function (deployer, network, accounts) {
                                                 return PriceOracle.at(PriceOracle.address).then((IPriceOracle) => {
                                                     return IPriceOracle.setPrice(TokenA.address, new BigNumber(340).times(new BigNumber(10).pow(18)), { from: ownerAddress }).then(() => {
                                                         return IPriceOracle.setPrice(TokenB.address, new BigNumber(5).times(new BigNumber(10).pow(18)), { from: ownerAddress }).then(() => {
-                                                            console.log(`TokenA : ${TokenA.address} \n
-                                                            TokenB : ${TokenB.address} \n
-                                                            ERC721 : ${ERC721.address} \n
-                                                            EthOptionFactory: ${EthOptionsFactory.address}
-                                                            `)
-                                                            var config = `module.exports = {\nbaseToken : '${TokenA.address}',\n quoteToken : '${TokenB.address}',\n factoryAddress: '${EthOptionsFactory.address}' \n}`
-                                                            fs.writeFile('./../address.js',config,function(err){
-                                                                if(err)
-                                                                console.log("err",err);
-                                                                else 
-                                                                console.log("address.js created");
+                                                            return EthOptionsFactory.at(EthOptionsFactory.address).then((factory) => {
+                                                                return factory.setPriceOracleAddress(PriceOracle.address, { from: ownerAddress }).then(() => {
+                                                                    console.log(`TokenA : ${TokenA.address} \n
+                                                                    TokenB : ${TokenB.address} \n
+                                                                    ERC721 : ${ERC721.address} \n
+                                                                    EthOptionFactory: ${EthOptionsFactory.address}
+                                                                    `)
+                                                                    var config = `module.exports = {\nbaseToken : '${TokenA.address}',\n quoteToken : '${TokenB.address}',\n factoryAddress: '${EthOptionsFactory.address}', \n optionAddress : '${ERC721.address}'\n}`
+                                                                    fs.writeFile('./../address.js', config, function (err) {
+                                                                        if (err)
+                                                                            console.log("err", err);
+                                                                        else
+                                                                            console.log("address.js created");
+                                                                    })
+                                                                })
                                                             })
-                                                
+
                                                         })
                                                     })
                                                 })
@@ -72,6 +76,5 @@ module.exports = function (deployer, network, accounts) {
         })
     })
 };
-
 
 
