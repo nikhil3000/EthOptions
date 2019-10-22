@@ -8,12 +8,12 @@ module.exports = {
     entry: ['@babel/polyfill', './src/app.js'],
     output: {
         path: path.join(__dirname, '/public'),
-        filename: '[name].bundle.js'
+        filename: 'bundle.js'
     },
     plugins: [
         // 	new BrotliPlugin({
         // 		asset: '[path].br[query]',
-        // 		test: /\.(js|css|html|svg)$/,
+        // 		test: /\.(js|css|html|svg)$/, 
         // 		threshold: 10240,
         // 		minRatio: 0.8
         // 	})

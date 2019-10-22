@@ -13,6 +13,7 @@ export default class Orderbook extends React.Component {
     }
     componentDidMount() {
         console.log("orderbook");
+        console.log(process.env.atlasUser);
     }
     render() {
         return (

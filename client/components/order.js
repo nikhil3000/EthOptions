@@ -3,9 +3,7 @@ import { ERC20Abi, factoryABI, optionABI } from '../config';
 import { factoryAddress, optionAddress } from '../../address';
 import axios from 'axios';
 const BigNumber = require('bignumber.js');
-// import KyberModal from './kyberRedirectModal';
 import Modal from 'react-modal';
-// const { parseLog } = require('ethereum-event-logs');
 Modal.setAppElement('#app');
 const customStyles = { content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)' } };
 
@@ -79,7 +77,7 @@ export default class Order extends React.Component {
                     })
                 }
             else {
-                console.log("insufficient balance");
+                console.log("insufficient balance", balance);
                 this.setState(
                     {
                         kyberAmount: (premium-balance) * 10** -18,
