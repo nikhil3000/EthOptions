@@ -80,7 +80,7 @@ export default class Post extends React.Component {
                                     premium,
                                     expiryDateTimestamp
                                 }
-                                axios.post('http://localhost:5000/postOrder', order)
+                                axios.post('/postOrder', order)
                                     .then(res => {
                                         if (res.data == "orderSaved")
                                             window.alert("Order saved");

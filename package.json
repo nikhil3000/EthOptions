@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "serve": "live-server public/",
-    "start": "nodemon index.js",
+    "start1": "nodemon index.js",
+    "start": "yarn install && node index.js",
+    "heroku-postbuild": "",
     "remix": "remixd -s . --remix-ide https://remix.ethereum.org"
   },
   "dependencies": {
