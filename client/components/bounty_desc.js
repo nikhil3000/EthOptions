@@ -89,7 +89,7 @@ export default class Bounty extends React.Component {
         })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         var account = JSON.parse(localStorage.getItem('AlgorandAccount'));
         this.setState({account:account});
     }

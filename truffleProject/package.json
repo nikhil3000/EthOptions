@@ -12,6 +12,7 @@
     "ganache-cli": "^6.7.0",
     "global": "^4.4.0",
     "truffle": "^5.0.40",
+    "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.1"
   }
 }

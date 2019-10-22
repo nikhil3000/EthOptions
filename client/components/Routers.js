@@ -24,7 +24,7 @@ export default class Routers extends React.Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
 
         axios.get('http://localhost:5000/getOrder').then(response => {
             console.log(response.data);
@@ -63,7 +63,7 @@ export default class Routers extends React.Component {
                 <Router history={history}>
                     <Switch>
 
-                        <Route path="/post" render={()=> <Post web3={this.state.web3}/>}></Route>
+                        <Route path="/post" render={()=> <Post history={history} web3={this.state.web3}/>}></Route>
                         <Route path="/orderbook" render={()=> <Orderbook history={history} data={this.state.data}/>}></Route>
                          <Route path="/order/:id" render={(props) => <Order history={history} data={this.state.data && this.state.data[props.match.params.id]} id={props.match.params.id} web3={this.state.web3}/>} />
                          <Route path="/myorders" render={()=> <MyOrder history={history} data={this.state.data} web3={this.state.web3}/>}></Route>

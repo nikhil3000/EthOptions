@@ -1,4 +1,4 @@
-const customData = require('./raw_data.json');
+const customData = require('./raw_data2.json');
 var fs = require('fs');
 
 
@@ -13,11 +13,11 @@ file.write('var data = [');
 
 for(var i=0;i<data.length;i++)
 {
-    if(data[i].platform.id == 1027)
-    {
-        var str = `{ value: '${data[i].platform.token_address}', label:'${data[i].symbol}' },\n`;
+    // if(data[i].platform.id == 1027)
+    // {
+        var str = `{ value: '${data[i].address}', label:'${data[i].symbol}' },\n`;
         file.write(str);
-    }
+    // }
    
 }
 

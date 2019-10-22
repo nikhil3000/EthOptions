@@ -10,7 +10,7 @@ export default class Earn extends React.Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         var account = localStorage.getItem('AlgorandAccount');
         if (!account)
             this.props.history.push('/login');

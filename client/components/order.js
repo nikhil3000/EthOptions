@@ -1,74 +1,101 @@
 import React from 'react';
-import { ERC20Abi, factoryABI,optionABI } from '../config';
+import { ERC20Abi, factoryABI, optionABI } from '../config';
 import { factoryAddress, optionAddress } from '../../address';
 import axios from 'axios';
 const BigNumber = require('bignumber.js');
+// import KyberModal from './kyberRedirectModal';
+import Modal from 'react-modal';
 // const { parseLog } = require('ethereum-event-logs');
-
+Modal.setAppElement('#app');
+const customStyles = { content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)' } };
 
 export default class Order extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            modalIsOpen: false,
+            kyberAmount : undefined,
+            assetSybmol: undefined
+        }
         this.handleFillOrder = this.handleFillOrder.bind(this);
         this.handleExerciseOrder = this.handleExerciseOrder.bind(this);
-    }
-
-    componentDidUpdate() {
-        console.log("order.js", this.props.data);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.goToKyber = this.goToKyber.bind(this);
     }
 
     pow(input) {
         return new BigNumber(input).times(new BigNumber(10).pow(18)).toString();
     }
-
+    
     handleFillOrder(e) {
         e.preventDefault();
+        console.log("fill order");
         var premium = this.pow(parseFloat(this.props.data.premium));
-        var tokenContract = new this.props.web3.eth.Contract(ERC20Abi, this.props.data.quoteTokenAddress);
+        var tokenContract = new this.props.web3.eth.Contract(ERC20Abi, this.props.data.quoteTokenAddress.toString());
         var factoryContract = new this.props.web3.eth.Contract(factoryABI, factoryAddress);
         var taker = this.props.web3.givenProvider.selectedAddress;
-        tokenContract.methods.approve(factoryAddress.toString(), premium)
-            .send({ from: taker }, (err, data) => {
-                if (err) {
-                    console.log("err", err);
-                    window.alert("Allowance needs to be provided for the quote token to pay premium amount");
-                }
-                else {
-                    factoryContract.methods.createOption(
-                        this.props.data.maker,
-                        taker,
-                        this.pow(this.props.data.qty),
-                        this.pow(this.props.data.strikePrice),
-                        this.props.data.baseTokenAddress,
-                        this.props.data.quoteTokenAddress,
-                        premium,
-                        new BigNumber(this.props.data.expiry).toString()
-                    ).send({
-                        from: taker,
-                        gas: 4000000
-                    }).then(receipt => {
-                        console.log(receipt);
-                        var id = receipt.events['idEvent'].returnValues[0];
-                        window.alert(`Token id is ${id}`);
-                        var data = this.props.data;
-                        var obj = {
-                            _id: data._id,
-                            taker: taker,
-                            tokenId: id
+        tokenContract.methods.balanceOf(taker.toString()).call().then(balance => {
+            console.log("balance");
+            if (balance >= premium) {
+                tokenContract.methods.approve(factoryAddress.toString(), premium)
+                    .send({ from: taker }, (err, data) => {
+                        if (err) {
+                            console.log("err", err);
+                            window.alert("Allowance needs to be provided for the quote token to pay premium amount");
                         }
-                        console.log(obj);
-                        axios.post('http://localhost:5000/updateOrder', obj)
-                            .then(res => {
-                                console.log(res);
+                        else {
+                            factoryContract.methods.createOption(
+                                this.props.data.maker,
+                                taker,
+                                this.pow(this.props.data.qty),
+                                this.pow(this.props.data.strikePrice),
+                                this.props.data.baseTokenAddress,
+                                this.props.data.quoteTokenAddress,
+                                premium,
+                                new BigNumber(this.props.data.expiry).toString()
+                            ).send({
+                                from: taker,
+                                gas: 4000000
+                            }).then(receipt => {
+                                console.log(receipt);
+                                var id = receipt.events['idEvent'].returnValues[0];
+                                window.alert(`Token id is ${id}`);
+                                var data = this.props.data;
+                                var obj = {
+                                    _id: data._id,
+                                    taker: taker,
+                                    tokenId: id
+                                }
+                                console.log(obj);
+                                axios.post('http://localhost:5000/updateOrder', obj)
+                                    .then(res => {
+                                        console.log(res);
+                                    })
+                            }).catch(err => {
+                                console.log(err);
                             })
-                    }).catch(err=>{
-                        console.log(err);
+                        }
                     })
                 }
-            })
+            else {
+                console.log("insufficient balance");
+                this.setState(
+                    {
+                        kyberAmount: (premium-balance) * 10** -18,
+                        assetSybmol:this.props.data.quoteToken
+                    });
+                this.openModal();
+            }
+
+        })
+        .catch(err=>{
+            console.log(err);
+        });
+
     }
 
-    handleExerciseOrder(e){
+    handleExerciseOrder(e) {
         e.preventDefault();
         var qty = parseFloat(e.target.elements.quantity.value.trim());
         var amount = this.pow(qty * this.props.data.strikePrice);
@@ -77,36 +104,68 @@ export default class Order extends React.Component {
         var factoryContract = new this.props.web3.eth.Contract(factoryABI, factoryAddress);
         var optionTokenContract = new this.props.web3.eth.Contract(optionABI, optionAddress);
         var tokenId = new BigNumber(this.props.data.tokenId).toString();
-        quoteTokenContract.methods.approve(factoryAddress.toString(),amount)
-        .send({from:taker},(err,data)=>{
-            if (err) {
-                console.log("err", err);
-                window.alert("Allowance needs to be provided for the quote token to exercise option");
-            }
-            else
+
+        quoteTokenContract.methods.balanceOf(taker.toString()).call().then(balance=>{
+            if(balance >= amount)
             {
-                optionTokenContract.methods.approve(factoryAddress.toString(),tokenId)
-                .send({from:taker}, (err,data)=>{
+                quoteTokenContract.methods.approve(factoryAddress.toString(), amount)
+                .send({ from: taker }, (err, data) => {
                     if (err) {
                         console.log("err", err);
-                        window.alert("Allowance needs to be provided for the option tokens to exercise option");
-                    } 
+                        window.alert("Allowance needs to be provided for the quote token to exercise option");
+                    }
                     else {
-                        factoryContract.methods.exerciseOption(tokenId,this.pow(qty))
-                        .send({from:taker},(err,data)=>{
-                            if (err) {
-                                console.log("err", err);
-                            } 
-                            else {
-                                window.alert("success");
-                            }
-                        })
+                        optionTokenContract.methods.approve(factoryAddress.toString(), tokenId)
+                            .send({ from: taker }, (err, data) => {
+                                if (err) {
+                                    console.log("err", err);
+                                    window.alert("Allowance needs to be provided for the option tokens to exercise option");
+                                }
+                                else {
+                                    factoryContract.methods.exerciseOption(tokenId, this.pow(qty))
+                                        .send({ from: taker }, (err, data) => {
+                                            if (err) {
+                                                console.log("err", err);
+                                            }
+                                            else {
+                                                window.alert("success");
+                                            }
+                                        })
+                                }
+                            })
                     }
                 })
             }
+            else
+            {
+            console.log("insufficient balance");
+            this.setState(
+                {
+                    kyberAmount: (amount-balance) * 10** -18,
+                    assetSybmol:this.props.data.quoteToken
+                });
+            this.openModal();
+
+            }
         })
+        .catch(err=>{
+            console.log("error in fetching balance" ,err);
+        })
+        
+    }
+    openModal() {
+        this.setState({ modalIsOpen: true });
     }
 
+    closeModal() {
+        this.setState({ modalIsOpen: false });
+    }
+
+    goToKyber() {
+        var url = 
+        `https://widget.kyber.network/v0.7.2/?type=buy&mode=tab&receiveToken=${this.state.assetSybmol}&receiveAmount=${this.state.kyberAmount}&callback=https://localhost:8080/${this.props.history.location.pathname}&network=ropsten`
+       console.log(url); window.open(url,'_blank');
+    }
     render() {
         return (
             <div>
@@ -129,9 +188,17 @@ export default class Order extends React.Component {
                         </div>
                         <button type="submit" className="btn btn-primary">Exercise Order</button>
                     </form>}
-                <link rel='stylesheet' href='https://widget.kyber.network/v0.7.2/widget.css' />
-                <a href='https://widget.kyber.network/v0.7.2/?type=swap&mode=popup&lang=en&callback=https%3A%2F%2Fkyberpay-sample.knstats.com%2Fcallback&paramForwarding=true&network=ropsten&theme=theme-emerald'class='kyber-widget-button theme-emerald theme-supported' name='KyberWidget - Powered by KyberNetwork' title='Pay with tokens'target='_blank'>Swap tokens</a>
-                <script async src='https://widget.kyber.network/v0.7.2/widget.js'></script>
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal}
+                    contentLabel="Insufficient Tokens"
+                    style={customStyles}
+                >
+
+                    <h2 ref={subtitle => this.subtitle = subtitle}>You don't have enough tokens for this order</h2>
+                    <button onClick={this.closeModal}>Cancel this order</button>
+                    <button onClick={this.goToKyber}>Get Tokens</button>
+                </Modal>
             </div>
         )
     }

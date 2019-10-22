@@ -17873,6 +17873,62 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {
+        "0x1261bd767a78873a016efcbb4c1a2bc3638792f3e3d2f15a52de82572ba1e430": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "idEvent",
+          "type": "event",
+          "signature": "0x1261bd767a78873a016efcbb4c1a2bc3638792f3e3d2f15a52de82572ba1e430"
+        },
+        "0xd1353c68e79ef70de84ee90d2facf845ec24895116d4a03505aa41785af71f5a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "Price",
+          "type": "event",
+          "signature": "0xd1353c68e79ef70de84ee90d2facf845ec24895116d4a03505aa41785af71f5a"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event",
+          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+        }
+      },
+      "links": {},
+      "address": "0x0aA81A21f121ce087b1DcBDEE8b1e4627e4B1B72",
+      "transactionHash": "0xedb062f0e84747e77718216f29595d38793e55b05fd32981f08a70a5e9c51edb"
+    },
     "1571568727499": {
       "events": {
         "0x1261bd767a78873a016efcbb4c1a2bc3638792f3e3d2f15a52de82572ba1e430": {
@@ -17928,10 +17984,66 @@
       "links": {},
       "address": "0x7cf42c2003a084909dACb7eb88a4404b6e6F5Dd9",
       "transactionHash": "0x63f4b93154dd70aabe35b556940bb05b5e7e58bef8d2438f7d16c5951f59944a"
+    },
+    "1571649817447": {
+      "events": {
+        "0x1261bd767a78873a016efcbb4c1a2bc3638792f3e3d2f15a52de82572ba1e430": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "idEvent",
+          "type": "event",
+          "signature": "0x1261bd767a78873a016efcbb4c1a2bc3638792f3e3d2f15a52de82572ba1e430"
+        },
+        "0xd1353c68e79ef70de84ee90d2facf845ec24895116d4a03505aa41785af71f5a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "Price",
+          "type": "event",
+          "signature": "0xd1353c68e79ef70de84ee90d2facf845ec24895116d4a03505aa41785af71f5a"
+        },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event",
+          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+        }
+      },
+      "links": {},
+      "address": "0xCf12171673151966E8816A817A2271f531ED459A",
+      "transactionHash": "0x9f199a86d6741721aff4295e60b5b7a1e61f4e546d656dfa6cdcb27dbbad2a42"
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-10-20T15:22:13.832Z",
+  "updatedAt": "2019-10-21T16:40:42.408Z",
   "devdoc": {
     "details": "Contract to manage the creation of Options, excercising Options  * ",
     "methods": {

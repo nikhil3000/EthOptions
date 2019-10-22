@@ -5,3 +5,6 @@ npm-debug.log
 yarn-error.log
 client/config.js
 raw_data.json
+raw_data2.json
+.secret
+data.json

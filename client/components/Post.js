@@ -4,9 +4,12 @@ import CreatableSelect from 'react-select/creatable';
 import DatePicker from "react-datepicker";
 import { data } from '../data'
 import "react-datepicker/dist/react-datepicker.css";
-import {ERC20Abi} from '../config';
+import { ERC20Abi } from '../config';
 import { factoryAddress } from '../../address';
 const BigNumber = require('bignumber.js');
+import Modal from 'react-modal';
+Modal.setAppElement('#app');
+const customStyles = { content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)' } };
 
 
 
@@ -18,6 +21,9 @@ export default class Post extends React.Component {
         this.handleBaseTokenChange = this.handleBaseTokenChange.bind(this);
         this.handleQuoteTokenChange = this.handleQuoteTokenChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.goToKyber = this.goToKyber.bind(this);
         this.state = {
             baseTokenObject: undefined,
             quoteTokenObject: undefined,
@@ -26,8 +32,7 @@ export default class Post extends React.Component {
     }
 
     componentDidMount() {
-        if(!this.props.web3.givenProvider.selectedAddress)
-        {
+        if (!this.props.web3.givenProvider.selectedAddress) {
             console.log("Metamask address not available, please refresh");
         }
         console.log(this.props.web3.givenProvider.selectedAddress);
@@ -36,7 +41,7 @@ export default class Post extends React.Component {
     }
 
     pow(input) {
-        return new BigNumber(input).times(new BigNumber(10).pow(18));
+        return new BigNumber(input).times(new BigNumber(10).pow(18)).toString();
     }
     handlePostFormSubmit(e) {
         e.preventDefault();
@@ -52,38 +57,54 @@ export default class Post extends React.Component {
             var expiryDateTimestamp = this.state.expiryDate.setHours(17, 0, 0, 0) / 1000;
             var tokenContract = new this.props.web3.eth.Contract(ERC20Abi, baseTokenAddress);
             var maker = this.props.web3.givenProvider.selectedAddress;
-            tokenContract.methods.approve(factoryAddress.toString(), this.pow(quantity).toString())
-                .send({ from: maker }, (err, data) => {
-                    if (err) {
-                        console.log("err", err);
-                        window.alert("Allowance needs to be provided for the base token to create order");
-                    }
-                    else {
-                        console.log("data", data);
-                        var order = {
-                            maker,
-                            quantity,
-                            strikePrice,
-                            baseTokenAddress,
-                            quoteTokenAddress,
-                            baseTokenLabel,
-                            quoteTokenLabel,
-                            premium,
-                            expiryDateTimestamp
-                        }
-                        axios.post('http://localhost:5000/postOrder', order)
-                            .then(res => {
-                                if(res.data == "orderSaved")
-                                window.alert("Order saved");
-                                else
-                                window.alert("failed to save order");
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
 
-                    }
-                })
+            tokenContract.methods.balanceOf(maker.toString()).call().then(balance => {
+                console.log("balance");
+                if (balance >= this.pow(quantity)) {
+                    tokenContract.methods.approve(factoryAddress.toString(), this.pow(quantity))
+                        .send({ from: maker }, (err, data) => {
+                            if (err) {
+                                console.log("err", err);
+                                window.alert("Allowance needs to be provided for the base token to create order");
+                            }
+                            else {
+                                console.log("data", data);
+                                var order = {
+                                    maker,
+                                    quantity,
+                                    strikePrice,
+                                    baseTokenAddress,
+                                    quoteTokenAddress,
+                                    baseTokenLabel,
+                                    quoteTokenLabel,
+                                    premium,
+                                    expiryDateTimestamp
+                                }
+                                axios.post('http://localhost:5000/postOrder', order)
+                                    .then(res => {
+                                        if (res.data == "orderSaved")
+                                            window.alert("Order saved");
+                                        else
+                                            window.alert("failed to save order");
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    })
+
+                            }
+                        })
+                }
+                else{
+                    console.log("insufficient balance");
+                this.setState(
+                    {
+                        kyberAmount: quantity- balance* 10 ** -18,
+                        assetSybmol:baseTokenLabel
+                    });
+                this.openModal();
+                }
+            })
+
         }
         else {
             window.alert("Choose some value for all the fields.");
@@ -101,6 +122,21 @@ export default class Post extends React.Component {
 
     handleDateChange(date) {
         this.setState({ expiryDate: date });
+    }
+
+    openModal() {
+        this.setState({ modalIsOpen: true });
+    }
+
+    closeModal() {
+        this.setState({ modalIsOpen: false });
+    }
+
+    goToKyber() {
+        var url = 
+        `https://widget.kyber.network/v0.7.2/?type=buy&mode=tab&receiveToken=${this.state.assetSybmol}&receiveAmount=${this.state.kyberAmount}&callback=https://localhost:8080/${this.props.history.location.pathname}&network=ropsten`
+       console.log(url);
+        window.open(url,'_blank');
     }
 
     render() {
@@ -158,7 +194,17 @@ export default class Post extends React.Component {
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal}
+                    contentLabel="Insufficient Tokens"
+                    style={customStyles}
+                >
 
+                    <h2 ref={subtitle => this.subtitle = subtitle}>You don't have enough tokens for this order</h2>
+                    <button onClick={this.closeModal}>Cancel this order</button>
+                    <button onClick={this.goToKyber}>Get Tokens</button>
+                </Modal>
             </div>
         )
     }
