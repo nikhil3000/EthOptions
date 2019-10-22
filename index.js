@@ -88,11 +88,17 @@ app.post('/updateOrder',(req,res)=>{
 })
 
 app.post('/payload',(req,res)=>{
-    let sig = "sha1=" + crypto.createHmac('sha1', process.env.webhookSecret).update(chunk.toString()).digest('hex');
+console.log(req.body);
+let sig = "sha1=" + crypto.createHmac('sha1', process.env.webhookSecret).update(JSON.stringify(req.body)).digest('hex');
 
         if (req.headers['x-hub-signature'] == sig) {
             exec('~/./deploy.sh');
         }
+	else {
+	console.log("false")
+	}
+
+res.end();
 })
 
 app.get("*", (req, res) => {
