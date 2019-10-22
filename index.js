@@ -5,6 +5,9 @@ const app = express();
 var mongoose = require('mongoose');
 var config = require('./config');
 const path = require('path');
+let crypto = require('crypto');
+const exec = require('child_process').exec;
+
  
 
 //Mongoose connection
@@ -84,6 +87,13 @@ app.post('/updateOrder',(req,res)=>{
     })
 })
 
+app.post('/payload',(req,res)=>{
+    let sig = "sha1=" + crypto.createHmac('sha1', process.env.webhookSecret).update(chunk.toString()).digest('hex');
+
+        if (req.headers['x-hub-signature'] == sig) {
+            exec('~/./deploy.sh');
+        }
+})
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "public", "index.html"));

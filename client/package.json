@@ -12,7 +12,7 @@
         "start": "webpack-dev-server --open --config webpack.dev.js",
         "build": "webpack --config webpack.prod.js"
     },
-    "proxy": "http://localhost:5000",
+    "proxy": "https://www.ethoptions.ml",
     "dependencies": {
         "@babel/plugin-transform-regenerator": "^7.4.0",
         "@babel/polyfill": "^7.4.0",
