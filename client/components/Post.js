@@ -141,9 +141,16 @@ export default class Post extends React.Component {
 
     render() {
         return (
-            <div className="post_body">
-                <span>Create Option</span>
-                <div>
+            <div className="post_body card card-box">
+                <div class="card-head">
+                    <header>Create Option</header>
+                    <div class="tools">
+                        <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                        <a class="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
+                        <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                    </div>
+                </div>
+                <div className="card-body">
                     <form className="container" onSubmit={this.handlePostFormSubmit}>
                         <div className="form-group">
                             <label htmlFor="exampleInputEmail1">Base Token</label>
