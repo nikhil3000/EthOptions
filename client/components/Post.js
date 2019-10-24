@@ -60,7 +60,7 @@ export default class Post extends React.Component {
 
             tokenContract.methods.balanceOf(maker.toString()).call().then(balance => {
                 console.log("balance");
-                if (balance >= this.pow(quantity)) {
+                if (balance - this.pow(quantity)>= 0) {
                     tokenContract.methods.approve(factoryAddress.toString(), this.pow(quantity))
                         .send({ from: maker }, (err, data) => {
                             if (err) {
@@ -95,7 +95,8 @@ export default class Post extends React.Component {
                         })
                 }
                 else{
-                    console.log("insufficient balance");
+                    console.log("insufficient balance",balance);
+                    console.log("quantity",this.pow(quantity));
                 this.setState(
                     {
                         kyberAmount: quantity- balance* 10 ** -18,

@@ -35,14 +35,9 @@ export default class Order extends React.Component {
         var taker = this.props.web3.givenProvider.selectedAddress;
         tokenContract.methods.balanceOf(taker.toString()).call().then(balance => {
             console.log("balance");
-            if (balance >= premium) {
+            if (balance - premium >= 0) {
                 tokenContract.methods.approve(factoryAddress.toString(), premium)
-                    .send({ from: taker }, (err, data) => {
-                        if (err) {
-                            console.log("err", err);
-                            window.alert("Allowance needs to be provided for the quote token to pay premium amount");
-                        }
-                        else {
+                    .send({ from: taker }).then(data=> {
                             factoryContract.methods.createOption(
                                 this.props.data.maker,
                                 taker,
@@ -73,11 +68,14 @@ export default class Order extends React.Component {
                             }).catch(err => {
                                 console.log(err);
                             })
-                        }
+                    }).catch(err=>{
+                        console.log("err", err);
+                        window.alert("Allowance needs to be provided for the quote token to pay premium amount");
                     })
                 }
             else {
                 console.log("insufficient balance", balance);
+                console.log("premium", premium);
                 this.setState(
                     {
                         kyberAmount: (premium-balance) * 10** -18,
