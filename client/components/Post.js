@@ -198,7 +198,6 @@ export default class Post extends React.Component {
                                 id="date"
                             />
                         </div>
-
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 </div>
