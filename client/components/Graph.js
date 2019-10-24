@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import OrderTable from './OrderTable';
 import Table from 'react-bootstrap/Table';
-import * as priceData from '../price.js';
+// import * as priceData from '../price.js';
 import {baseURL} from '../config';
 
 
@@ -15,7 +15,7 @@ export default class Orderbook extends React.Component {
         }
     }
     componentDidMount() {
-       console.log(priceData);
+    //    console.log(priceData);
        axios.get(baseURL + '/getPriceData')
        .then(res=>{
            console.log(res);
