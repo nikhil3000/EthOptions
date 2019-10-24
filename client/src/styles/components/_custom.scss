@@ -6,3 +6,162 @@
     margin-right: '-50%';
     transform: 'translate(-50%, -50%)'
 }
+
+.card-box {
+    background: #fff;
+    min-height: 50px;
+    box-shadow: none;
+    position: relative;
+    margin-bottom: 20px;
+    transition: .5s;
+    border: 1px solid #f2f2f2;
+    border-radius: 0;
+}
+
+.card-head {
+    border-radius: 2px 2px 0 0;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+    padding: 2px;
+    text-transform: uppercase;
+    color: #3a405b;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 40px;
+    min-height: 40px;
+}
+
+.card-head header {
+    display: inline-block;
+    padding: 11px 24px;
+    vertical-align: middle;
+    line-height: 17px;
+    font-size: 16px;
+}
+
+.card-head .tools {
+    padding-right: 16px;
+    float: right;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    margin-left: 24px;
+    line-height: normal;
+    vertical-align: middle;
+}
+.card-head > div {
+    display: inline-block;
+}
+
+
+
+.card-body:last-child {
+    border-radius: 0 0 2px 2px;
+}
+.card-body {
+    padding: 10px 24px 24px 24px;
+    position: relative;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.table td, .table th, .card .table td, .card .table th, .card .dataTable td, .card .dataTable th {
+    padding: 15px 8px;
+    vertical-align: middle;
+}
+
+.table thead tr th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.label.label-sm {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 6px 6px;
+}
+
+.label.label-sm {
+    font-size: 13px;
+    padding: 2px 5px;
+}
+.label-success {
+    background-color: #36c6d3 !important;
+}
+.label {
+    text-shadow: none!important;
+    color: #fff;
+    font-family: Roboto,sans-serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 8px 15px;
+    background: #1ebdcc;
+    line-height: 1;
+    text-align: center;
+}
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+
+.row{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: absolute; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+  }
+  
+  /* The navigation menu links */
+  .sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidenav a:hover {
+    color: #f1f1f1;
+  }
+  
+  /* Style page content */
+  .main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  .navbar-cust{
+        background-color: #fff;
+        width: 100%;
+        font-size: 1.5em;
+        text-align: center;
+        padding: 1em 0 1em 0;
+        margin-bottom: 2%;
+  }

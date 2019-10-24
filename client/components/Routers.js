@@ -10,6 +10,7 @@ import Orderbook from './Orderbook';
 import Order from './order';
 import axios from 'axios';
 import MyOrder from './myOrder';
+import Home from './Home';
 
 export const history = createBrowserHistory();
 
@@ -26,7 +27,11 @@ export default class Routers extends React.Component {
 
     UNSAFE_componentWillMount() {
 
+<<<<<<< HEAD
         axios.get(baseURL+'/getOrder').then(response => {
+=======
+        axios.get('http://localhost:5000/getOrder').then(response => {
+>>>>>>> master
             console.log(response.data);
             for(var i=0;i<response.data.length;i++) {
                 var date = new Date(response.data[i].expiry * 1000).toString();
@@ -62,11 +67,12 @@ export default class Routers extends React.Component {
                 <NavBar />
                 <Router history={history}>
                     <Switch>
+                        <Route path="/home" render={()=> <Home history={history} data={this.state.data} web3={this.state.web3}/>}></Route>
 
                         <Route path="/post" render={()=> <Post history={history} web3={this.state.web3}/>}></Route>
                         <Route path="/orderbook" render={()=> <Orderbook history={history} data={this.state.data}/>}></Route>
-                         <Route path="/order/:id" render={(props) => <Order history={history} data={this.state.data && this.state.data[props.match.params.id]} id={props.match.params.id} web3={this.state.web3}/>} />
-                         <Route path="/myorders" render={()=> <MyOrder history={history} data={this.state.data} web3={this.state.web3}/>}></Route>
+                        <Route path="/order/:id" render={(props) => <Order history={history} data={this.state.data && this.state.data[props.match.params.id]} id={props.match.params.id} web3={this.state.web3}/>} />
+                        <Route path="/myorders" render={()=> <MyOrder history={history} data={this.state.data} web3={this.state.web3}/>}></Route>
                         {/*<Route path="/" exact={true} render={() => <QuestionsList history={history} factoryContractUport={this.state.factoryContractUport} web3={this.state.web3} />} />
                         <Route path="/poll/:address" render={(props) => <Poll history={history} web3={this.state.web3} address={props.match.params.address} />} />
                         <Route path="/register" render={() => <Register history={history} factoryContractUport={this.state.factoryContractUport} />} />
