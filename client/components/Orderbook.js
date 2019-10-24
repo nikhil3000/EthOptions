@@ -17,7 +17,7 @@ export default class Orderbook extends React.Component {
     }
     render() {
         return (
-            <div class="col-md-12 col-sm-12">
+            
                 <div class="card card-box">
                     <div class="card-head">
                         <header>Order Book</header>
@@ -55,7 +55,7 @@ export default class Orderbook extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            
         )
     }
 }
