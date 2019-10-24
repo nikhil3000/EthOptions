@@ -7,8 +7,25 @@ var config = require('./config');
 const path = require('path');
 let crypto = require('crypto');
 const exec = require('child_process').exec;
-
+var priceData = require('./price.json')
+const fs = require('fs');
  
+// console.log(JSON.stringify(priceData));
+
+// var obj = {
+//     date:"2019-10-24",
+//     open:"0.1598",
+//     close:"0.1655",
+//     high:"0.1666",
+//     low:"0.1588"
+// };
+// console.log("before",priceData.length);
+// priceData.push(obj);
+// console.log(priceData.length);
+// fs.writeFile('./price.json',JSON.stringify(priceData),function(err,data){
+//     console.log("err",err);
+//     console.log("data",data);
+// })
 
 //Mongoose connection
 mongoose.connect(config.db.mongoURI, { useNewUrlParser: true })
@@ -58,6 +75,9 @@ app.post('/postOrder', (req, res) => {
     })
 })
 
+app.get('/getPriceData',(req,res)=>{
+    res.send(JSON.stringify(priceData));
+})
 
 app.get('/getOrder',(req,res)=>{
     Order.find({})
