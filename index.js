@@ -88,22 +88,6 @@ app.post('/updateOrder',(req,res)=>{
     })
 })
 
-<<<<<<< HEAD
-=======
-app.post('/payload',(req,res)=>{
-console.log(req.body);
-let sig = "sha1=" + crypto.createHmac('sha1', process.env.webhookSecret).update(JSON.stringify(req.body)).digest('hex');
-
-        if (req.headers['x-hub-signature'] == sig) {
-            exec('~/./deploy.sh');
-        }
-	else {
-	console.log("false")
-	}
-
-res.end();
-})
->>>>>>> master
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "public", "index.html"));
