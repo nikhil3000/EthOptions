@@ -8,7 +8,13 @@ export default class NavBar extends React.Component {
     render() {
         return (
             <div className="navbar-cust">
-                EthOptions
+                
+                <div className="center-heading">EthOptions</div>
+
+                <div className="top-menu">
+                    <span>Hello, Siddharth Bhalla <i class="fa fa-angle-down"></i></span>
+				</div>
+
             </div>
         )
     }

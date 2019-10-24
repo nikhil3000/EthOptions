@@ -1,6 +1,6 @@
 #chartdiv {
     width: 100%;
-    height: 30vh;
+    height: 35vh;
   }
 
 .modalClass {
@@ -186,10 +186,18 @@ body{
     font-size: 1.7em;
     font-weight: 600;
     text-align: center;
-    padding: 1.5em 0 1.5em 0;
-    margin-bottom: 2%;
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: 1.5em;
+    margin-bottom: 1.4em;
     z-index: 999;
     color:#fff;
+    border-bottom: 3px solid #fff;
+    transition: all 0.3s;
+  }
+
+  .navbar-cust:hover{
+    background-color: rgba(255,255,255,0.03);
+    transition: all 0.3s;
   }
 
   .button-cust{
@@ -246,4 +254,25 @@ body{
     height: 450px;
     background-color: #182c4b;
     background-image: linear-gradient(90deg, #182c4b, #254474); /* Standard syntax (must be last) */
+}
+
+.top-menu{
+    font-size: 0.5em;
+    margin: 0;
+    padding: 0;
+    float: right;
+    padding: 1em 0;
+    font-weight: 500;
+}
+
+.center-heading{
+    position: absolute;
+    // left: 50%;
+    // transform: translateX(-50%);
+    float: left;
+    transition: all 0.3s;
+}
+.navbar-cust:hover .center-heading{
+    color: #40c999;
+    transition: all 0.3s;
 }
