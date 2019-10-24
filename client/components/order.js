@@ -1,5 +1,5 @@
 import React from 'react';
-import { ERC20Abi, factoryABI, optionABI } from '../config';
+import { ERC20Abi, factoryABI, optionABI, baseURL } from '../config';
 import { factoryAddress, optionAddress } from '../../address';
 import axios from 'axios';
 const BigNumber = require('bignumber.js');
@@ -66,7 +66,7 @@ export default class Order extends React.Component {
                                     tokenId: id
                                 }
                                 console.log(obj);
-                                axios.post('http://localhost:5000/updateOrder', obj)
+                                axios.post(baseURL+'/updateOrder', obj)
                                     .then(res => {
                                         console.log(res);
                                     })

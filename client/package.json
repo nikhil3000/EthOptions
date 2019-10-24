@@ -5,14 +5,13 @@
     "license": "MIT",
     "scripts": {
         "start-client": "webpack-dev-server --mode=development --host 0.0.0.0 --env.NODE_ENV=development",
-        "build-prod": "webpack -p --mode=production --config=production-webpack.config.js",
+        "build-prod": "webpack -p --mode=production --config=production-webpack.config.js --env.NODE_ENV=production",
         "build-dev": "webpack --mode=development",
         "dev": "concurrently \"webpack-dev-server\" \"nodemon ./server/index.js\"",
         "analyze": "source-map-explorer ./src/app.js",
         "start": "webpack-dev-server --open --config webpack.dev.js",
         "build": "webpack --config webpack.prod.js"
     },
-    "proxy": "https://www.ethoptions.ml",
     "dependencies": {
         "@babel/plugin-transform-regenerator": "^7.4.0",
         "@babel/polyfill": "^7.4.0",

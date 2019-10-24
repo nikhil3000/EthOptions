@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import Post from './Post';
 import NavBar from './NavBar';
 import Web3 from 'web3';
-import {rpcURL} from '../config';
+import {rpcURL,baseURL} from '../config';
 import Orderbook from './Orderbook';
 import Order from './order';
 import axios from 'axios';
@@ -26,7 +26,7 @@ export default class Routers extends React.Component {
 
     UNSAFE_componentWillMount() {
 
-        axios.get('http://localhost:5000/getOrder').then(response => {
+        axios.get(baseURL+'/getOrder').then(response => {
             console.log(response.data);
             for(var i=0;i<response.data.length;i++) {
                 var date = new Date(response.data[i].expiry * 1000).toString();

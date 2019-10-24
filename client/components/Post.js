@@ -4,7 +4,7 @@ import CreatableSelect from 'react-select/creatable';
 import DatePicker from "react-datepicker";
 import { data } from '../data'
 import "react-datepicker/dist/react-datepicker.css";
-import { ERC20Abi } from '../config';
+import { ERC20Abi, baseURL } from '../config';
 import { factoryAddress } from '../../address';
 const BigNumber = require('bignumber.js');
 import Modal from 'react-modal';
@@ -80,7 +80,7 @@ export default class Post extends React.Component {
                                     premium,
                                     expiryDateTimestamp
                                 }
-                                axios.post('http://localhost:5000/postOrder', order)
+                                axios.post(baseURL+'/postOrder', order)
                                     .then(res => {
                                         if (res.data == "orderSaved")
                                             window.alert("Order saved");
