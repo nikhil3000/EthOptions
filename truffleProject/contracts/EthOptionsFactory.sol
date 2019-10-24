@@ -77,11 +77,15 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         optionList[_tokenId].qty = optionList[_tokenId].qty.sub(_qty);
     }
     
-    function getLatestTokenId() public view returns(uint256){
-        require(msg.sender == optionTokenAddress,"Non whitelisted address cannot update token ID");
-        tokenID.add(1);
+    function getLatestTokenId() public view returns (uint256)
+    {
         return tokenID;
     }
+    // function getLatestTokenId() public returns(uint256){
+    //     require(msg.sender == optionTokenAddress,"Non whitelisted address cannot update token ID");
+    //     tokenID = tokenID.add(1);
+    //     return tokenID;
+    // }
     
     function getOptionDetails(uint256 tokenId) public view returns(address,address,uint256,uint256,address,address,uint256,uint256){
         option memory tempOption = optionList[tokenId];

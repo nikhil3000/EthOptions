@@ -66,7 +66,7 @@ export default class Order extends React.Component {
                                     tokenId: id
                                 }
                                 console.log(obj);
-                                axios.post('/updateOrder', obj)
+                                axios.post('http://localhost:5000/updateOrder', obj)
                                     .then(res => {
                                         console.log(res);
                                     })

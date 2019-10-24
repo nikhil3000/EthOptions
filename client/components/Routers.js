@@ -26,7 +26,7 @@ export default class Routers extends React.Component {
 
     UNSAFE_componentWillMount() {
 
-        axios.get('/getOrder').then(response => {
+        axios.get('http://localhost:5000/getOrder').then(response => {
             console.log(response.data);
             for(var i=0;i<response.data.length;i++) {
                 var date = new Date(response.data[i].expiry * 1000).toString();

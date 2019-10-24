@@ -27,14 +27,14 @@
     "absolutePath": "/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IEthOptionsFactory.sol",
     "exportedSymbols": {
       "IEthOptionsFactory": [
-        2630
+        2616
       ]
     },
-    "id": 2631,
+    "id": 2617,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2624,
+        "id": 2610,
         "literals": [
           "solidity",
           "^",
@@ -50,9 +50,9 @@
         "contractKind": "contract",
         "documentation": "Escrow contract for Token Interface ",
         "fullyImplemented": false,
-        "id": 2630,
+        "id": 2616,
         "linearizedBaseContracts": [
-          2630
+          2616
         ],
         "name": "IEthOptionsFactory",
         "nodeType": "ContractDefinition",
@@ -60,28 +60,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2629,
+            "id": 2615,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLatestTokenId",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2625,
+              "id": 2611,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "125:2:11"
             },
             "returnParameters": {
-              "id": 2628,
+              "id": 2614,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2627,
+                  "id": 2613,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2629,
+                  "scope": 2615,
                   "src": "148:7:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -90,7 +90,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2626,
+                    "id": 2612,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "148:7:11",
@@ -105,14 +105,14 @@
               ],
               "src": "147:9:11"
             },
-            "scope": 2630,
+            "scope": 2616,
             "src": "100:57:11",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2631,
+        "scope": 2617,
         "src": "66:93:11"
       }
     ],
@@ -122,14 +122,14 @@
     "absolutePath": "/Users/nikhilyadav/ethOptions/truffleProject/contracts/interfaces/IEthOptionsFactory.sol",
     "exportedSymbols": {
       "IEthOptionsFactory": [
-        2630
+        2616
       ]
     },
-    "id": 2631,
+    "id": 2617,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2624,
+        "id": 2610,
         "literals": [
           "solidity",
           "^",
@@ -145,9 +145,9 @@
         "contractKind": "contract",
         "documentation": "Escrow contract for Token Interface ",
         "fullyImplemented": false,
-        "id": 2630,
+        "id": 2616,
         "linearizedBaseContracts": [
-          2630
+          2616
         ],
         "name": "IEthOptionsFactory",
         "nodeType": "ContractDefinition",
@@ -155,28 +155,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 2629,
+            "id": 2615,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLatestTokenId",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2625,
+              "id": 2611,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "125:2:11"
             },
             "returnParameters": {
-              "id": 2628,
+              "id": 2614,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2627,
+                  "id": 2613,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2629,
+                  "scope": 2615,
                   "src": "148:7:11",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -185,7 +185,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2626,
+                    "id": 2612,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "148:7:11",
@@ -200,14 +200,14 @@
               ],
               "src": "147:9:11"
             },
-            "scope": 2630,
+            "scope": 2616,
             "src": "100:57:11",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2631,
+        "scope": 2617,
         "src": "66:93:11"
       }
     ],
@@ -219,7 +219,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.16",
-  "updatedAt": "2019-10-20T15:22:10.606Z",
+  "updatedAt": "2019-10-23T19:22:41.384Z",
   "devdoc": {
     "methods": {}
   },
