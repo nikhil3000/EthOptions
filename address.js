@@ -1,6 +1,4 @@
 module.exports = {
-baseToken : '0x53b24DB9237Fe5a7fa5a95f9bDC1008A5fa8B121',
- quoteToken : '0x422dB8FB1539Bd5Ab32bcA83AA313b3a49668E75',
- factoryAddress: '0xd4Ce68D3dB5b13bCe5f0041bb66009Ad34a4141A', 
- optionAddress : '0xc4E100Ed9D35Dd93BAd468d7a2064b7Db640b950'
+ factoryAddress: '0x6420203213FFE3ca54C4D74b1eF1961a69B0514c', 
+ optionAddress : '0x480667E41EdcC371f52E81f6cE00F138a2E272d4'
 }

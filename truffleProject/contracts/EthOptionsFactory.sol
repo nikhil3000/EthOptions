@@ -24,6 +24,11 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
      uint256 private tokenID;
      address private optionTokenAddress; //erc721.sol
      address private priceOracleAddress;
+     address public knc = 0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6;
+     address public snx = 0x013AE307648f529aa72c5767A334DDd37aaB43c3;
+     address public link = 0xb4f7332ed719Eb4839f091EDDB2A3bA309739521;
+     address public eos = 0xd5b4218B950A53fF07985E2d88346925c335EAe7;
+     
      event idEvent(uint256);
      event Price(uint256,uint256);
      struct option {
@@ -41,15 +46,13 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
      //tokenid to object mapping
      mapping(uint256 => option) optionList;  
     
-     constructor(address _optionAddressToken) public{
+     constructor(address _optionAddressToken, address _priceOracleAddress) public{
          optionTokenAddress = _optionAddressToken;
+         priceOracleAddress = _priceOracleAddress;
          EscrowAddress = address(new Escrow());
          tokenID = 1;
      }
      
-     function setPriceOracleAddress(address _priceOracleAddress) public onlyOwner {
-         priceOracleAddress = _priceOracleAddress;
-     }
      
     function createOption( address _maker, address _taker, uint256 _qty, uint256 _strikePrice, address _baseToken, address _quoteToken,uint256 _premium, uint256 _expiry) public returns(uint256){
         //tranfering base tokens to escrow
@@ -113,7 +116,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         require(IERC20(token).allowance( owner,address(this)) >= amount,"Insufficient Allowance");
     }
     
-    function _canBeExercised(uint256 _tokenId,uint256 _qty) public returns (bool){
+    function _canBeExercised(uint256 _tokenId,uint256 _qty) public view returns (bool){
         option memory tempOption = optionList[_tokenId];
         require(_tokenId < tokenID && _tokenId > 0, "invalid tokenID");
         require(msg.sender == tempOption.taker, "Only taker can excercise the option");
@@ -124,16 +127,34 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         return true;
     }
      
-    function _getPrice(address baseToken, address quoteToken) internal returns(uint256)
+    function _getPrice(address baseToken, address quoteToken) internal view returns(uint256)
     {
         require(priceOracleAddress != address(0),"Price Oracle Address is not set");
-        uint256 basePrice = IOracle(priceOracleAddress).getPrice(baseToken, now).mul(10 ** 18);  // to support decimal strike price
-        uint256 quotePrice = IOracle(priceOracleAddress).getPrice(quoteToken, now);
+        uint256 basePrice;
+        uint256 quotePrice;
+        
+        if(baseToken == knc)
+        basePrice = IOracle(priceOracleAddress).currentPriceKNC();
+        else if(baseToken == snx)
+        basePrice = IOracle(priceOracleAddress).currentPriceSNX();
+        else if(baseToken == link)
+        basePrice = IOracle(priceOracleAddress).currentPriceLINK();
+        else if(baseToken == eos)
+        basePrice = IOracle(priceOracleAddress).currentPriceEOS();
+        
+        basePrice = basePrice.mul(10 ** 16); //to support decimals, price oracle has already multiplied by 2
+        
+        if(quoteToken == knc)
+        quotePrice = IOracle(priceOracleAddress).currentPriceKNC();
+        else if(quoteToken == snx)
+        quotePrice = IOracle(priceOracleAddress).currentPriceSNX();
+        else if(quoteToken == link)
+        quotePrice = IOracle(priceOracleAddress).currentPriceLINK();
+        else if(quoteToken == eos)
+        quotePrice = IOracle(priceOracleAddress).currentPriceEOS();
+       
         uint256 price = basePrice.div(quotePrice);
-        // emit Price(basePrice,quotePrice);
-        // emit Price(quotePrice,basePrice);
-        // emit Price(1,price);
-        return (price);
+        return (price); 
     }
     
     function _transferFromEscrow(address token,uint256 amount, address payee, address maker) internal{

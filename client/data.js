@@ -1,9 +1,6 @@
-import { baseToken, quoteToken } from '../address';
-
 module.exports = {
     data: [
-        { value: baseToken, label: "DemoBaseToken" },
-        { value: quoteToken, label: "DemoQuoteToken" },
+        
         { value: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', label: 'ETH' },
         { value: '0x4e470dc7321e84ca96fcaedd0c8abcebbaeb68c6', label: 'KNC' },
         { value: '0x4bfba4a8f28755cb2061c413459ee562c6b9c51b', label: 'OMG' },
