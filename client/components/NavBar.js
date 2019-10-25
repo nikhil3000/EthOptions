@@ -12,7 +12,7 @@ export default class NavBar extends React.Component {
                 <div className="center-heading">EthOptions</div>
 
                 <div className="top-menu">
-                    <span>Hello, Siddharth Bhalla <i class="fa fa-angle-down"></i></span>
+                    <span>Hello, Siddharth Bhalla <i className="fa fa-angle-down"></i></span>
 				</div>
 
             </div>
