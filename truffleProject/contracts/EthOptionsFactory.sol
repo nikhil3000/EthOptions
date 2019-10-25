@@ -127,7 +127,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         return true;
     }
      
-    function _getPrice(address baseToken, address quoteToken) internal view returns(uint256)
+    function _getPrice(address baseToken, address quoteToken) public view returns(uint256)
     {
         require(priceOracleAddress != address(0),"Price Oracle Address is not set");
         uint256 basePrice;
@@ -142,7 +142,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
         else if(baseToken == eos)
         basePrice = IOracle(priceOracleAddress).currentPriceEOS();
         
-        basePrice = basePrice.mul(10 ** 16); //to support decimals, price oracle has already multiplied by 2
+        basePrice = basePrice.mul(10 ** 18); //to support decimals
         
         if(quoteToken == knc)
         quotePrice = IOracle(priceOracleAddress).currentPriceKNC();

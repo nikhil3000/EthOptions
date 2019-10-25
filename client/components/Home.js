@@ -112,10 +112,10 @@ export default class Home extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-md-6 col-sm-12">
-                            <Orderbook history={this.props.history} data={this.props.data}/>
+                            <Orderbook history={this.props.history} data={this.props.data} orderbook={true} web3={this.props.web3}/>
                         </div>
                         <div className="col-md-6 col-sm-12">
-                            <MyOrder history={this.props.history} data={this.props.data} web3={this.props.web3}/>
+                            <MyOrder history={this.props.history} data={this.props.data} web3={this.props.web3} orderbook={false}/>
                         </div>
                     </div>
                     <div className="fab">

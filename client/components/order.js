@@ -25,7 +25,7 @@ export default class Order extends React.Component {
     pow(input) {
         return new BigNumber(input).times(new BigNumber(10).pow(18)).toString();
     }
-    
+     
     handleFillOrder(e) {
         e.preventDefault();
         console.log("fill order");

@@ -95,7 +95,6 @@ app.post('/updateOrder',(req,res)=>{
         console.log("order",order);
         order.taker = req.body.taker;
         order.tokenId = req.body.tokenId;
-        order.qty = 0;
         order.save()
         .then(()=>{
             console.log("obj updated");
