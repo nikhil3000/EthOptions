@@ -18,19 +18,19 @@ export default class Orderbook extends React.Component {
     render() {
         return (
             
-                <div class="card card-box">
-                    <div class="card-head">
+                <div className="card card-box">
+                    <div className="card-head">
                         <header>Order Book</header>
-                        <div class="tools">
-                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-                            <a class="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
-                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                        <div className="tools">
+                            <a className="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                            <a className="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
+                            <a className="t-close btn-color fa fa-times" href="javascript:;"></a>
                         </div>
                     </div>
-                    <div class="card-body ">
-                        <div class="table-wrap">
-                            <div class="table-responsive">
-                                <table class="table display product-overview mb-30" id="support_table">
+                    <div className="card-body ">
+                        <div className="table-wrap">
+                            <div className="table-responsive">
+                                <table className="table display product-overview mb-30" id="support_table">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>

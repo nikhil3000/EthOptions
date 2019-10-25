@@ -142,13 +142,13 @@ export default class Post extends React.Component {
 
     render() {
         return (
-            <div className="post_body card card-box">
-                <div class="card-head">
+            <div className="post_body">
+                <div className="card-head">
                     <header>Create Option</header>
-                    <div class="tools">
-                        <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
-                        <a class="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
-                        <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                    <div className="tools">
+                        <a className="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                        <a className="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
+                        <a className="t-close btn-color fa fa-times" href="#" ></a>
                     </div>
                 </div>
                 <div className="card-body">
