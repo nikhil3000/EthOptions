@@ -42,7 +42,12 @@ export default class OrderTable extends React.Component {
             console.log("balance");
             if (balance - premium >= 0) {
                 tokenContract.methods.approve(factoryAddress.toString(), premium)
-                    .send({ from: taker }).then(data => {
+                    .send({ from: taker })
+                    .on('transactionHash', hash => {
+                        this.props.toggleLoadingModal(true);
+                    })
+                    .on('receipt', receipt => {
+                        this.props.toggleLoadingModal(false);
                         factoryContract.methods.createOption(
                             this.props.data.maker,
                             taker,
@@ -55,9 +60,13 @@ export default class OrderTable extends React.Component {
                         ).send({
                             from: taker,
                             gas: 4000000
-                        }).then(receipt => {
+                        }).on('transactionHash', hash => {
+                            this.props.toggleLoadingModal(true);
+                        }).on('receipt', receipt => {
+                            this.props.toggleLoadingModal(false);
                             console.log(receipt);
                             var id = receipt.events['idEvent'].returnValues[0];
+                            // TODO : Change it to dialog or modal
                             window.alert(`Token id is ${id}`);
                             var data = this.props.data;
                             var obj = {
@@ -70,10 +79,14 @@ export default class OrderTable extends React.Component {
                                 .then(res => {
                                     console.log(res);
                                 })
-                        }).catch(err => {
+                        }).on('error', err => {
+                            this.props.toggleLoadingModal(false);
+                            window.alert('Transaction failed');
                             console.log(err);
                         })
-                    }).catch(err => {
+                    })
+                    .on('error', err => {
+                        this.props.toggleLoadingModal(false);
                         console.log("err", err);
                         window.alert("Allowance needs to be provided for the quote token to pay premium amount");
                     })
@@ -102,41 +115,57 @@ export default class OrderTable extends React.Component {
         var tokenId = new BigNumber(this.props.data.tokenId).toString();
 
         quoteTokenContract.methods.balanceOf(taker.toString()).call().then(balance => {
-            if (balance - amount>= 0 ) {
+            if (balance - amount >= 0) {
                 quoteTokenContract.methods.approve(factoryAddress.toString(), amount)
                     .send({ from: taker })
-                    .then(receipt => {
+                    .on('transactionHash', hash => {
+                        this.props.toggleLoadingModal(true);
+                    })
+                    .on('receipt', receipt => {
+                        this.props.toggleLoadingModal(false);
                         optionTokenContract.methods.approve(factoryAddress.toString(), tokenId)
                             .send({ from: taker })
-                            .then(receipt => {
+                            .on('transactionHash', hash => {
+                                this.props.toggleLoadingModal(true);
+                            })
+                            .on('receipt', receipt => {
+                                this.props.toggleLoadingModal(false);
                                 factoryContract.methods.exerciseOption(tokenId, this.pow(qty))
-                                    .send({ from: taker }).then( data=> {
+                                    .send({ from: taker })
+                                    .on('transactionHash', hash => {
+                                        this.props.toggleLoadingModal(true);
+                                    })
+                                    .on('receipt', data => {
+                                        this.props.toggleLoadingModal(false);
+                                        var data = this.props.data;
+                                        var obj = {
+                                            _id: data._id,
+                                            _qty = qty
+                                        }
+                                        axios.post(baseURL + '/updateQty',obj)
+                                        .then(res=>{
                                             window.alert("success");
-                                        
-                                    }).catch(err=>{
+                                        })
+                                    }).on('error', err => {
+                                        this.props.toggleLoadingModal(false);
                                         console.log(err);
                                     })
                             })
-                            .catch(err => {
+                            .on('error', err => {
                                 console.log("err", err);
+                                this.props.toggleLoadingModal(false);
                                 window.alert("Allowance needs to be provided for the option tokens to exercise option");
                             })
                     })
-                    .catch(err => {
+                    .on('error', err => {
                         console.log("err", err);
+                        this.props.toggleLoadingModal(false);
                         window.alert("Allowance needs to be provided for the quote token to exercise option");
                     })
             }
             else {
                 console.log("insufficient balance");
                 this.props.triggerModal(this.props.data.quoteToken, (amount - balance) * 10 ** -18);
-                // this.setState(
-                //     {
-                //         kyberAmount: (amount - balance) * 10 ** -18,
-                //         assetSybmol: this.props.data.quoteToken
-                //     });
-                // this.openModal();
-
             }
         })
             .catch(err => {
@@ -179,7 +208,7 @@ export default class OrderTable extends React.Component {
                 <td>{this.getFormattedDate(this.props.data.expiry)}</td>
                 <td>{this.props.data.qty}</td>
                 <td>{this.props.data.premium}</td>
-                {this.state.orderbook && <td><button className="btn button-cust" variant="primary" onClick={this.handleFillOrder}>Fill Order</button></td>}
+                {this.state.orderbook && <td><button className="button-cust btn" variant="primary" onClick={this.handleFillOrder}>Fill Order</button></td>}
                 {/* {!this.state.orderbook && <td><button className="btn button-cust" variant="primary" onClick={this.handleExerciseOrder}>Exercise</button></td>} */}
                 {!this.state.orderbook &&
                     <td>

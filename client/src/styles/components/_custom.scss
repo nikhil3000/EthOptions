@@ -1,3 +1,16 @@
+.flashMessage{
+    background-color: #ff3232;
+    color:white;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: 'Muli', sans-serif;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
 #chartdiv {
     width: 100%;
     height: 45vh;

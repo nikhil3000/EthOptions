@@ -7,6 +7,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ERC20Abi, baseURL } from '../config';
 import { factoryAddress } from '../../address';
 const BigNumber = require('bignumber.js');
+import ErrorImg from './error-01.jpg';
+import Spinner from 'react-bootstrap/Spinner';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-modal';
 Modal.setAppElement('#app');
 const customStyles = { content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)' } };
@@ -24,10 +27,13 @@ export default class Post extends React.Component {
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.goToKyber = this.goToKyber.bind(this);
+        this.closeWaitForKyber = this.closeWaitForKyber.bind(this);
         this.state = {
             baseTokenObject: undefined,
             quoteTokenObject: undefined,
-            expiryDate: undefined
+            expiryDate: undefined,
+            loading:false,
+            waitForKyber:false
         }
     }
 
@@ -62,13 +68,12 @@ export default class Post extends React.Component {
                 console.log("balance");
                 if (balance - this.pow(quantity)>= 0) {
                     tokenContract.methods.approve(factoryAddress.toString(), this.pow(quantity))
-                        .send({ from: maker }, (err, data) => {
-                            if (err) {
-                                console.log("err", err);
-                                window.alert("Allowance needs to be provided for the base token to create order");
-                            }
-                            else {
-                                console.log("data", data);
+                        .send({ from: maker })
+                        .on('transactionHash', hash=>{
+                            this.setState({loading:true});
+                        })
+                        .on('receipt', receipt=>{
+                            this.setState({loading:false});
                                 var order = {
                                     maker,
                                     quantity,
@@ -82,6 +87,7 @@ export default class Post extends React.Component {
                                 }
                                 axios.post(baseURL+'/postOrder', order)
                                     .then(res => {
+                                        //TODO : change this alert to dialog
                                         if (res.data == "orderSaved")
                                             window.alert("Order saved");
                                         else
@@ -90,8 +96,6 @@ export default class Post extends React.Component {
                                     .catch(err => {
                                         console.log(err);
                                     })
-
-                            }
                         })
                 }
                 else{
@@ -137,7 +141,15 @@ export default class Post extends React.Component {
         var url = 
         `https://widget.kyber.network/v0.7.2/?type=buy&mode=tab&receiveToken=${this.state.assetSybmol}&receiveAmount=${this.state.kyberAmount}&callback=https://localhost:8080/${this.props.history.location.pathname}&network=ropsten`
        console.log(url);
+
+       this.closeModal();
+       this.setState({ waitForKyber: true });
         window.open(url,'_blank');
+
+    }
+
+    closeWaitForKyber() {
+        this.setState({ waitForKyber: false });
     }
 
     render() {
@@ -207,10 +219,39 @@ export default class Post extends React.Component {
                     contentLabel="Insufficient Tokens"
                     style={customStyles}
                 >
+                    <div className="container-responsive token-less-error text-center">
+                        <div style={{ width: '80%', margin: '0 auto' }}>
+                            <div className="image-container">
+                                <img src={ErrorImg}></img>
+                            </div>
+                            <div className="message">
+                                <span ref={subtitle => this.subtitle = subtitle}>You don't have enough tokens for this order</span>
+                            </div>
+                            <div className="get-tokens">
+                                <button onClick={this.goToKyber}>Get Tokens</button>
+                            </div>
+                            <div className="cancel-order">
+                                <button onClick={this.closeModal}>Cancel this order</button>
+                            </div>
+                        </div>
 
-                    <h2 ref={subtitle => this.subtitle = subtitle}>You don't have enough tokens for this order</h2>
-                    <button onClick={this.closeModal}>Cancel this order</button>
-                    <button onClick={this.goToKyber}>Get Tokens</button>
+                    </div>
+                </Modal>
+                <Modal
+                    isOpen={this.state.loading}
+                    contentLabel="Loading"
+                    style={customStyles}
+                >
+                    <Spinner animation="border"/>
+                    <span ref={subtitle => this.subtitle = subtitle}>Waiting for transaction to mine</span>
+                </Modal>
+                <Modal
+                    isOpen={this.state.waitForKyber}
+                    onRequestClose={this.closeWaitForKyber}
+                    contentLabel="Wait for Kyber"
+                    style={customStyles}
+                >
+                    <span ref={subtitle => this.subtitle = subtitle}>Please complete your transaction on Kyber and wait for it to mine.</span>
                 </Modal>
             </div>
         )

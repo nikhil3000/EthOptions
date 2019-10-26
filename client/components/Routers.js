@@ -5,10 +5,10 @@ import { createBrowserHistory } from 'history';
 import Post from './Post';
 import Web3 from 'web3';
 import {rpcURL,baseURL} from '../config';
-import Orderbook from './Orderbook';
+// import Orderbook from './Orderbook-legacy';
 import Order from './order';
 import axios from 'axios';
-import MyOrder from './myOrder';
+import MyOrder from './Orderbook';
 import Home from './Home';
 
 export const history = createBrowserHistory();
@@ -43,7 +43,12 @@ export default class Routers extends React.Component {
         if (window.ethereum) {
           // metamask is available
           if(!web3.currentProvider.selectedAddress)
-          window.ethereum.enable();    
+          window.ethereum.enable();
+
+        //   if(!window.web3.currentProvider)
+        //   {
+
+        //   }
           web3js = new Web3(window.web3.currentProvider);
         } else {
           //user is not running metamask
@@ -62,17 +67,17 @@ export default class Routers extends React.Component {
         return (
             <div>
                 
-                <div className='blue-half'></div>
+                
                 
                 <Router history={history}>
                 
                     <Switch>
                         <Route path="/home" render={()=> <Home history={history} data={this.state.data} web3={this.state.web3}/>}></Route>
 
-                        <Route path="/post" render={()=> <Post history={history} web3={this.state.web3}/>}></Route>
+                        {/* <Route path="/post" render={()=> <Post history={history} web3={this.state.web3}/>}></Route>
                         <Route path="/orderbook" render={()=> <Orderbook history={history} data={this.state.data}/>}></Route>
                         <Route path="/order/:id" render={(props) => <Order history={history} data={this.state.data && this.state.data[props.match.params.id]} id={props.match.params.id} web3={this.state.web3}/>} />
-                        <Route path="/myorders" render={()=> <MyOrder history={history} data={this.state.data} web3={this.state.web3}/>}></Route>
+                        <Route path="/myorders" render={()=> <MyOrder history={history} data={this.state.data} web3={this.state.web3}/>}></Route> */}
                         {/*<Route path="/" exact={true} render={() => <QuestionsList history={history} factoryContractUport={this.state.factoryContractUport} web3={this.state.web3} />} />
                         <Route path="/poll/:address" render={(props) => <Poll history={history} web3={this.state.web3} address={props.match.params.address} />} />
                         <Route path="/register" render={() => <Register history={history} factoryContractUport={this.state.factoryContractUport} />} />
