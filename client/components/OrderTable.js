@@ -140,7 +140,7 @@ export default class OrderTable extends React.Component {
                                         var data = this.props.data;
                                         var obj = {
                                             _id: data._id,
-                                            _qty = qty
+                                            _qty :qty
                                         }
                                         axios.post(baseURL + '/updateQty',obj)
                                         .then(res=>{
