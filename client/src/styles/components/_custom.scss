@@ -202,7 +202,7 @@ body{
     padding: 0.5em 1em 0.5em 1em;
     margin-top: 1.5em;
     margin-bottom: 1.4em;
-    z-index: 999;
+    z-index: 99;
     color:#fff;
     border-bottom: 3px solid #fff;
     transition: all 0.3s;
@@ -548,4 +548,13 @@ body{
 
 .MuiButton-textPrimary {
     color: #90caf9;
+}
+
+.table td{
+    color: #767a7f;
+}
+
+
+.ReactModal__Overlay{
+    z-index: 99999;
 }

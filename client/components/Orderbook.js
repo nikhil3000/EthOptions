@@ -3,7 +3,6 @@ import OrderTable from './OrderTable';
 import Modal from 'react-modal';
 import ErrorImg from './error-01.jpg';
 import Spinner from 'react-bootstrap/Spinner';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 Modal.setAppElement('#app');
