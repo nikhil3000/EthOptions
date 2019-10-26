@@ -87,7 +87,7 @@ export default class Orderbook extends React.Component {
                     </div>
                 </div>
                 <div className="card-body ">
-                    {this.checkCount() &&
+                    {/* {!this.props.orderbook && this.checkCount() && */}
                         <div className="table-wrap">
                             <div className="table-responsive">
                                 <table className="table display product-overview mb-30" id="support_table">
@@ -129,8 +129,8 @@ export default class Orderbook extends React.Component {
                                 </table>
                             </div>
                         </div>
-                    }{
-                        !this.checkCount() && <div style={{ textAlign: 'left', fontSize: '1.5em', paddingLeft: '2%' }}>No orders found :(</div>
+                    {
+                        !this.checkCount() && !this.props.orderbook && <div style={{ textAlign: 'left', fontSize: '1.5em', paddingLeft: '2%' }}>No orders found :(</div>
                     }
                 </div>
                 <Modal
