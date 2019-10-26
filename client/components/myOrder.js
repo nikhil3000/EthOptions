@@ -110,10 +110,8 @@ export default class MyOrder extends React.Component {
                         contentLabel="Insufficient Tokens"
                         style={customStyles}
                     >
-
-                        <h2 ref={subtitle => this.subtitle = subtitle}>You don't have enough tokens for this order</h2>
-                        <button onClick={this.closeModal}>Cancel this order</button>
-                        <button onClick={this.goToKyber}>Get Tokens</button>
+                        
+                        
                     </Modal>
                     
             </div>

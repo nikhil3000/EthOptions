@@ -19,6 +19,9 @@ module.exports = {
                 'css-loader',
                 'sass-loader'
             ]
+        },{
+            test: /\.(jpe?g|png|gif|mp3)$/i,
+            loaders: ['file-loader']
         }]
     },
     node: { fs: 'empty' },

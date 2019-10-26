@@ -348,3 +348,191 @@ body{
 .fab:hover .fab-button::before{
     opacity: 1;
 }
+
+.token-less-error{
+    padding:2% 10%;
+}
+.token-less-error .message{
+    font-size: 1em;
+    color: #666;
+    font-weight: 500;
+    /* font-family: 'Roboto', sans-serif; */
+    margin-bottom: 8%;
+}
+
+.get-tokens button{
+    border: none;
+    background: #F14F49;
+    color: #fff;
+    border-radius: 50px;
+    padding: 0.7em 1.2em;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 2%;
+    transition:all 0.3s;
+}
+.get-tokens button:hover{
+    background: rgb(240, 103, 98);
+    transition:all 0.3s;
+}
+
+.cancel-order button{
+    border: none;
+    color: #F14F49;
+    padding: 0.7em 1.2em;
+    font-size: 0.8em;
+    font-weight: 600;
+    background: none;
+}
+
+.cancel-order button:hover{
+    color: rgb(240, 103, 98);
+}
+
+.image-container img{
+    width: 100%;
+    height: auto;
+}
+.image-container{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.MuiDialog-paperWidthSm {
+    max-width: 600px;
+}
+
+.MuiDialog-paperScrollPaper {
+    display: flex;
+    max-height: calc(100% - 64px);
+    flex-direction: column;
+}
+.MuiDialog-paper {
+    margin: 32px;
+    position: relative;
+    overflow-y: auto;
+}
+.MuiPaper-elevation24 {
+    box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+}
+.MuiPaper-rounded {
+    border-radius: 4px;
+}
+.MuiPaper-root {
+    color: #fff;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #424242;
+}
+
+.MuiDialogTitle-root {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 16px 24px;
+}
+
+.MuiTypography-h6 {
+    font-size: 1.25rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+}
+.MuiTypography-root {
+    margin: 0;
+}
+
+.MuiDialogContent-root {
+    flex: 1 1 auto;
+    padding: 8px 24px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.MuiDialogContentText-root {
+    margin-bottom: 12px;
+}
+
+.MuiTypography-colorTextSecondary {
+    color: rgba(255, 255, 255, 0.7);
+}
+.MuiTypography-body1 {
+    font-size: 1rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+}
+.MuiTypography-root {
+    margin: 0;
+}
+.MuiDialogActions-root {
+    flex: 0 0 auto;
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+.MuiButton-text {
+    padding: 6px 8px;
+}
+
+.MuiButton-root {
+    color: #fff;
+    padding: 6px 16px;
+    font-size: 0.875rem;
+    min-width: 64px;
+    box-sizing: border-box;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    line-height: 1.75;
+    border-radius: 4px;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+}
+
+.MuiButtonBase-root {
+    color: inherit;
+    border: 0;
+    cursor: pointer;
+    margin: 0;
+    display: inline-flex;
+    outline: 0;
+    padding: 0;
+    position: relative;
+    align-items: center;
+    user-select: none;
+    border-radius: 0;
+    vertical-align: middle;
+    -moz-appearance: none;
+    justify-content: center;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.MuiButton-label {
+    width: 100%;
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+}
+
+.MuiTouchRipple-root {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+    position: absolute;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.MuiButton-textPrimary {
+    color: #90caf9;
+}

@@ -10,6 +10,7 @@ import MyOrder from './myOrder';
 import Modal from 'react-modal';
 Modal.setAppElement('#app');
 const customStyles = { content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)' } };
+import Dialogbox from'./Dialogbox'
 
 export default class Home extends React.Component {
 
@@ -39,7 +40,6 @@ export default class Home extends React.Component {
     render() {
         return (
             <div className="container-responsive">
-                
                 <div className="page-content">
                 
                     <div className="row">
@@ -110,6 +110,9 @@ export default class Home extends React.Component {
                             <Graph />
                         </div>
                     </div>
+                    
+                    <Dialogbox heading="Use Google's location service?" description="Lorem Ipsum Dolor Sit Amet" button1="Agree" button2="Disagree"/>
+
                     <div className="row">
                         <div className="col-md-6 col-sm-12">
                             <Orderbook history={this.props.history} data={this.props.data} orderbook={true} web3={this.props.web3}/>

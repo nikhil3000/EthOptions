@@ -2,6 +2,8 @@ import React from 'react';
 import OrderTable from './OrderTable';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-modal';
+import ErrorImg from './error-01.jpg';
+
 
 Modal.setAppElement('#app');
 const customStyles = { content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)' } };
@@ -94,10 +96,23 @@ export default class Orderbook extends React.Component {
                         contentLabel="Insufficient Tokens"
                         style={customStyles}
                     >
-
-                        <h2 ref={subtitle => this.subtitle = subtitle}>You don't have enough tokens for this order</h2>
-                        <button onClick={this.closeModal}>Cancel this order</button>
-                        <button onClick={this.goToKyber}>Get Tokens</button>
+                        <div className="container-responsive token-less-error text-center">
+                            <div style={{width:'80%', margin:'0 auto'}}>
+                                <div className="image-container">
+                                    <img src={ErrorImg}></img>
+                                </div>
+                                <div className="message">
+                                    <span ref={subtitle => this.subtitle = subtitle}>You don't have enough tokens for this order</span>
+                                </div>
+                                <div className="get-tokens">
+                                    <button onClick={this.goToKyber}>Get Tokens</button>
+                                </div>
+                                <div className="cancel-order">
+                                    <button onClick={this.closeModal}>Cancel this order</button>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </Modal>
                 </div>
             </div>
