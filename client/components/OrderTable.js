@@ -48,6 +48,17 @@ export default class OrderTable extends React.Component {
                     })
                     .on('receipt', receipt => {
                         this.props.toggleLoadingModal(false);
+                        var obj = {
+                            maker: this.props.data.maker,
+                            taker,
+                            qty : this.pow(this.props.data.qty),
+                            strikePrice: this.pow(this.props.data.strikePrice),
+                            baseTokenAddress: this.props.data.baseTokenAddress,
+                            quoteTokenAddress: this.props.data.quoteTokenAddress,
+                            premium,
+                            expiry: new BigNumber(this.props.data.expiry).toString()
+                        }
+                        console.log(obj);
                         factoryContract.methods.createOption(
                             this.props.data.maker,
                             taker,
@@ -96,7 +107,6 @@ export default class OrderTable extends React.Component {
                 console.log("premium", premium);
                 this.props.triggerModal(this.props.data.quoteToken, (premium - balance) * 10 ** -18);
             }
-
         })
             .catch(err => {
                 console.log(err);

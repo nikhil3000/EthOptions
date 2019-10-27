@@ -97,6 +97,9 @@ export default class Post extends React.Component {
                                         console.log(err);
                                     })
                         })
+                        .on('error', err=>{
+                            console.loh("approval error",err);
+                        })
                 }
                 else{
                     console.log("insufficient balance",balance);
