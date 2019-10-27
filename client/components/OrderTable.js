@@ -9,8 +9,11 @@ export default class OrderTable extends React.Component {
         super(props);
         // this.goToOrder = this.goToOrder.bind(this)
         this.state = {
-            orderbook: true
+            orderbook: true,
+            quantity:0
         }
+
+        this.onQuantityChange = this.onQuantityChange.bind(this);
         this.handleFillOrder = this.handleFillOrder.bind(this);
         this.handleExerciseOrder = this.handleExerciseOrder.bind(this);
 
@@ -31,6 +34,9 @@ export default class OrderTable extends React.Component {
         return new BigNumber(input).times(new BigNumber(10).pow(18)).toString();
     }
 
+    onQuantityChange(e){
+        this.setState({quantity: e.target.value});
+    }
     handleFillOrder(e) {
         e.preventDefault();
         console.log("fill order");
@@ -116,7 +122,7 @@ export default class OrderTable extends React.Component {
 
     handleExerciseOrder(e) {
         e.preventDefault();
-        var qty = parseFloat(e.target.elements.quantity.value.trim());
+        var qty = parseFloat(this.state.quantity.trim());
         var amount = this.pow(qty * this.props.data.strikePrice);
         var quoteTokenContract = new this.props.web3.eth.Contract(ERC20Abi, this.props.data.quoteTokenAddress);
         var taker = this.props.web3.givenProvider.selectedAddress;
@@ -221,12 +227,13 @@ export default class OrderTable extends React.Component {
                 {this.state.orderbook && <td><button className="button-cust btn" variant="primary" onClick={this.handleFillOrder}>Fill Order</button></td>}
                 {/* {!this.state.orderbook && <td><button className="btn button-cust" variant="primary" onClick={this.handleExerciseOrder}>Exercise</button></td>} */}
                 {!this.state.orderbook &&
-                    <td>
-                        <form onSubmit={this.handleExerciseOrder}>
-                            <input type="number" step="0.01" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity"></input>
-                            <button type="submit" className="btn btn-primary">Exercise Order</button>
-                        </form>
-                    </td>}
+                <td>
+                    <input type="number" step="0.01" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity" value={this.state.quantity} onChange={this.onQuantityChange}></input>
+                </td> &&
+                <td>
+                    <button type="submit" className="button-cust btn" onClick={this.handleExerciseOrder}>Exercise Order</button>
+                </td>
+                }
             </tr>
         )
     }

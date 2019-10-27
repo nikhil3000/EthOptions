@@ -9,7 +9,6 @@ import { factoryAddress } from '../../address';
 const BigNumber = require('bignumber.js');
 import ErrorImg from './error-01.jpg';
 import Spinner from 'react-bootstrap/Spinner';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-modal';
 Modal.setAppElement('#app');
 const customStyles = { content: { top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)' } };
