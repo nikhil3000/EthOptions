@@ -19,8 +19,8 @@ export default class Dialogbox extends React.Component {
                     <p class="MuiTypography-root MuiDialogContentText-root MuiTypography-body1 MuiTypography-colorTextSecondary" id="alert-dialog-description">{this.props.description}</p>
                 </div>
                 <div class="MuiDialogActions-root MuiDialogActions-spacing">
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary" tabindex="0" type="button"><span class="MuiButton-label">Disagree</span><span class="MuiTouchRipple-root"></span></button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary" tabindex="0" type="button"><span class="MuiButton-label">Agree</span><span class="MuiTouchRipple-root"></span></button>
+                    {/* <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary" tabindex="0" type="button"><span class="MuiButton-label">Okay</span><span class="MuiTouchRipple-root"></span></button> */}
+                    {/* <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary" tabindex="0" type="button"><span class="MuiButton-label">Agree</span><span class="MuiTouchRipple-root"></span></button> */}
                 </div>
             </div>
         )

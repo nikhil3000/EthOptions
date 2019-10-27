@@ -88,16 +88,21 @@ export default class Post extends React.Component {
                                     .then(res => {
                                         //TODO : change this alert to dialog
                                         if (res.data == "orderSaved")
-                                            window.alert("Order saved");
+                                        {
+                                            this.props.triggerDialogBox("Order Saved","Your order has been posted to Orderbook");
+                                        }
+                                            
                                         else
-                                            window.alert("failed to save order");
+                                        this.props.triggerDialogBox("Error","Some error occured while saving the order");
+
+                                            // window.alert("failed to save order");
                                     })
                                     .catch(err => {
                                         console.log(err);
                                     })
                         })
                         .on('error', err=>{
-                            console.loh("approval error",err);
+                            this.props.triggerDialogBox("Error","Approval for allowance to transfer base tokens failed.")
                         })
                 }
                 else{
@@ -114,7 +119,9 @@ export default class Post extends React.Component {
 
         }
         else {
-            window.alert("Choose some value for all the fields.");
+            this.props.triggerDialogBox("Alert","Choose some value for all the fields");
+
+            // window.alert("Choose some value for all the fields.");
         }
     }
 
@@ -159,11 +166,11 @@ export default class Post extends React.Component {
             <div className="post_body">
                 <div className="card-head">
                     <header>Create Option</header>
-                    <div className="tools">
+                    {/* <div className="tools">
                         <a className="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                         <a className="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
                         <a className="t-close btn-color fa fa-times" href="#" ></a>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="card-body">
                     <form className="container" onSubmit={this.handlePostFormSubmit}>
@@ -245,7 +252,8 @@ export default class Post extends React.Component {
                     style={customStyles}
                 >
                     <Spinner animation="border"/>
-                    <span ref={subtitle => this.subtitle = subtitle}>Waiting for transaction to mine</span>
+                    <br></br>
+                    <span ref={subtitle => this.subtitle = subtitle}><h2>Waiting for transaction to mine</h2></span>
                 </Modal>
                 <Modal
                     isOpen={this.state.waitForKyber}
@@ -253,7 +261,7 @@ export default class Post extends React.Component {
                     contentLabel="Wait for Kyber"
                     style={customStyles}
                 >
-                    <span ref={subtitle => this.subtitle = subtitle}>Please complete your transaction on Kyber and wait for it to mine.</span>
+                    <span ref={subtitle => this.subtitle = subtitle}><h2>Please complete your transaction on Kyber and wait for it to mine.<br></br>Try again after getting tokens from Kyber</h2></span>
                 </Modal>
             </div>
         )

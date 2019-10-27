@@ -56,7 +56,7 @@ import "@openzeppelin/contracts/ownership/Ownable.sol";
      
     function createOption( address _maker, address _taker, uint256 _qty, uint256 _strikePrice, address _baseToken, address _quoteToken,uint256 _premium, uint256 _expiry) public returns(uint256){
         //tranfering base tokens to escrow
-        _transferToEscrow(_baseToken,_qty,_maker); //I am hoping that require inside the function will prevent it from proceeding. Needs to check this
+        require(_transferToEscrow(_baseToken,_qty,_maker),"Failed at _transferToEscrow"); //I am hoping that require inside the function will prevent it from proceeding. Needs to check this
         //transfering premium to maker
         require(_transferERC20(_quoteToken,_premium,_taker,_maker), "Failed at transfer of premium");
         //TODO: Create option token and transfer them to taker.

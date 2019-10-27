@@ -74,14 +74,73 @@ export default class Orderbook extends React.Component {
     }
     render() {
         return (
-            <div className="card card-box">
+            <div>
+            <div className="row">
+                        <div className="col-sm-3 col-6">
+                            <div className='card-box' style={{ marginBottom: '10%' }}>
+                                <div className='info-card bg-green'>
+                                    <div className='contents'>
+                                        <div className='header'>
+                                            KNC Market Cap
+                                        </div>
+                                        <div className='info'>
+                                        $29,730,233 USD
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-3 col-6">
+                            <div className='card-box' style={{ marginBottom: '10%' }}>
+                                <div className='info-card bg-red'>
+                                    <div className='contents'>
+                                        <div className='header'>
+                                        Volume (24h)
+                                        </div>
+                                        <div className='info'>
+                                        $3,806,663 USD
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-3 col-6">
+                            <div className='card-box' style={{ marginBottom: '10%' }}>
+                                <div className='info-card bg-purple'>
+                                    <div className='contents'>
+                                        <div className='header'>
+                                        Total Supply
+                                        </div>
+                                        <div className='info'>
+                                        213,017,962 KNC
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-3 col-6">
+                            <div className='card-box' style={{ marginBottom: '10%' }}>
+                                <div className='info-card bg-blue'>
+                                    <div className='contents'>
+                                        <div className='header'>
+                                        Price
+                                        </div>
+                                        <div className='info'>                               
+                                        $0.175829 USD 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <div className="card card-box">    
                 <div className="card-head">
-                    <header>Some Graph Here</header>
-                    <div className="tools">
+                    <header>KNC-USD Price Chart</header>
+                    {/* <div className="tools">
                         <a className="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                         <a className="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
                         <a className="t-close btn-color fa fa-times" href="javascript:;"></a>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="card-body no-padding height-9">
                     <div className="form-group">
@@ -89,15 +148,16 @@ export default class Orderbook extends React.Component {
                             <CreatableSelect
                                 className="basic-single"
                                 classNamePrefix="select"
-                                defaultValue={''}
+                                defaultValue={'KNC'}
                                 onChange={this.handleBaseTokenChange}
                                 options={data}
-                                placeholder="Base Token"
+                                placeholder="Token for chart"
                             />
                         </Fragment>
                     </div>
                     <div id="chartdiv"></div>
                 </div>
+            </div>
             </div>
         )
     }

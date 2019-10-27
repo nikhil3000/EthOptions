@@ -84,7 +84,8 @@ export default class OrderTable extends React.Component {
                             console.log(receipt);
                             var id = receipt.events['idEvent'].returnValues[0];
                             // TODO : Change it to dialog or modal
-                            window.alert(`Token id is ${id}`);
+                            this.props.triggerDialogBox("Order Filled",`Your order ID is ${id}`);
+                            // window.alert(`Token id is ${id}`);
                             var data = this.props.data;
                             var obj = {
                                 _id: data._id,
@@ -98,14 +99,17 @@ export default class OrderTable extends React.Component {
                                 })
                         }).on('error', err => {
                             this.props.toggleLoadingModal(false);
-                            window.alert('Transaction failed');
+                            this.props.triggerDialogBox("Transaction Failed",`Your transaction to fill order returned an error.`);
+                            // window.alert('Transaction failed');
                             console.log(err);
                         })
                     })
                     .on('error', err => {
                         this.props.toggleLoadingModal(false);
                         console.log("err", err);
-                        window.alert("Allowance needs to be provided for the quote token to pay premium amount");
+                        this.props.triggerDialogBox("Alert",`Allowance needs to be provided for the quote token to pay premium amount`);
+
+                        // window.alert("Allowance needs to be provided for the quote token to pay premium amount");
                     })
             }
             else {
@@ -160,7 +164,7 @@ export default class OrderTable extends React.Component {
                                         }
                                         axios.post(baseURL + '/updateQty',obj)
                                         .then(res=>{
-                                            window.alert("success");
+                                            this.props.triggerDialogBox("Success","You have successfully exercised your Option");
                                         })
                                     }).on('error', err => {
                                         this.props.toggleLoadingModal(false);
@@ -170,13 +174,17 @@ export default class OrderTable extends React.Component {
                             .on('error', err => {
                                 console.log("err", err);
                                 this.props.toggleLoadingModal(false);
-                                window.alert("Allowance needs to be provided for the option tokens to exercise option");
+                        this.props.triggerDialogBox("Alert","Allowance needs to be provided for the option tokens to exercise option");
+
+                                // window.alert("Allowance needs to be provided for the option tokens to exercise option");
                             })
                     })
                     .on('error', err => {
                         console.log("err", err);
                         this.props.toggleLoadingModal(false);
-                        window.alert("Allowance needs to be provided for the quote token to exercise option");
+                        this.props.triggerDialogBox("Alert","Allowance needs to be provided for the quote token to exercise option");
+
+                        // window.alert("Allowance needs to be provided for the quote token to exercise option");
                     })
             }
             else {
@@ -227,12 +235,14 @@ export default class OrderTable extends React.Component {
                 {this.state.orderbook && <td><button className="button-cust btn" variant="primary" onClick={this.handleFillOrder}>Fill Order</button></td>}
                 {/* {!this.state.orderbook && <td><button className="btn button-cust" variant="primary" onClick={this.handleExerciseOrder}>Exercise</button></td>} */}
                 {!this.state.orderbook &&
+                <Fragment>
                 <td>
-                    <input type="number" step="0.01" className="form-control" required id="noOfTokens" name="quantity" placeholder="Quantity" value={this.state.quantity} onChange={this.onQuantityChange}></input>
-                </td> &&
+                    <input type="number" step="0.01" className="form-control" width="4px" required id="noOfTokens" name="quantity" placeholder="Quantity" value={this.state.quantity} onChange={this.onQuantityChange}></input>
+                </td> 
                 <td>
                     <button type="submit" className="button-cust btn" onClick={this.handleExerciseOrder}>Exercise Order</button>
                 </td>
+                </Fragment>
                 }
             </tr>
         )

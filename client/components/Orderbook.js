@@ -3,6 +3,7 @@ import OrderTable from './OrderTable';
 import Modal from 'react-modal';
 import ErrorImg from './error-01.jpg';
 import Spinner from 'react-bootstrap/Spinner';
+import Dialogbox from './Dialogbox';
 
 
 Modal.setAppElement('#app');
@@ -78,12 +79,12 @@ export default class Orderbook extends React.Component {
             <div className="card card-box">
                 <div className="card-head">
                     {this.props.orderbook && <header>Order Book</header>}
-                    {!this.props.orderbook && <header>Your Orders</header>}
-                    <div className="tools">
+                    {!this.props.orderbook && <header>Orders you have filled</header>}
+                    {/* <div className="tools">
                         <a className="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                         <a className="t-collapse btn-color fa fa-chevron-up" href="javascript:;"></a>
                         <a className="t-close btn-color fa fa-times" href="javascript:;"></a>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="card-body ">
                     {/* {!this.props.orderbook && this.checkCount() && */}
@@ -99,7 +100,7 @@ export default class Orderbook extends React.Component {
                                             <th scope="col">Expiry Date</th>
                                             <th scope="col">No. of Base Tokens</th>
                                             <th scope="col">Premium</th>
-                                            {!this.props.orderbook && <th scope="col">Qty</th>}
+                                            {!this.props.orderbook && <th scope="col">Quantity</th>}
                                             <th scope="col">Buy Order</th>
                                         </tr>
                                     </thead>
@@ -107,9 +108,10 @@ export default class Orderbook extends React.Component {
                                         <tbody>
                                             {
                                                 this.props.data && this.props.data.map((record, index) => (
-                                                    this.props.web3 && this.props.web3.givenProvider.selectedAddress == record.taker &&
+                                                    this.props.web3 &&this.props.web3.givenProvider  && this.props.web3.givenProvider.selectedAddress == record.taker &&
                                                     <OrderTable key={index} data={record} index={index} history={this.props.history} orderbook={this.props.orderbook}
-                                                        triggerModal={this.triggerModal} web3={this.props.web3} toggleLoadingModal={this.toggleLoadingModal}/>
+                                                        triggerModal={this.triggerModal} web3={this.props.web3} toggleLoadingModal={this.toggleLoadingModal}
+                                                        triggerDialogBox={this.props.triggerDialogBox}/>
                                                 ))
                                             }
                                         </tbody>
@@ -120,7 +122,8 @@ export default class Orderbook extends React.Component {
                                                 this.props.data && this.props.data.map((record, index) => (
                                                     !record.taker &&
                                                     <OrderTable key={index} data={record} index={index} history={this.props.history} orderbook={this.props.orderbook}
-                                                        triggerModal={this.triggerModal} web3={this.props.web3} toggleLoadingModal={this.toggleLoadingModal}/>
+                                                        triggerModal={this.triggerModal} web3={this.props.web3} toggleLoadingModal={this.toggleLoadingModal}
+                                                        triggerDialogBox={this.props.triggerDialogBox}/>
                                                 ))
                                             }
                                         </tbody>
@@ -129,7 +132,7 @@ export default class Orderbook extends React.Component {
                             </div>
                         </div>
                     {
-                        !this.checkCount() && !this.props.orderbook && <div style={{ textAlign: 'left', fontSize: '1.5em', paddingLeft: '2%' }}>No orders found :(</div>
+                        !this.checkCount() && !this.props.orderbook && <div style={{ textAlign: 'left', fontSize: '1.5em', paddingLeft: '2%' }}>You haven't filled any orders :(</div>
                     }
                 </div>
                 <Modal

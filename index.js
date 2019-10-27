@@ -107,6 +107,23 @@ app.post('/updateOrder',(req,res)=>{
     })
 })
 
+app.post('/updateQty',(req,res)=>{
+    Order.findOne(({_id:req.body._id}))
+    .then(order =>{
+        order.qty -= req.body._qty;
+        order.save()
+        .then(()=>{
+            console.log("obj updated");
+            res.send('orderUpdated');
+        })
+        .catch(err=>{
+            console.log(err);
+            res.send('failed');
+        })
+        
+    })
+})
+
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "public", "index.html"));
