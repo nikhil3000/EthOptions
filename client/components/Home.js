@@ -62,6 +62,8 @@ export default class Home extends React.Component {
           { 
             this.setState({flashMessage:'Please unlock Metamask'});
           }
+          else if(window.web3.currentProvider.networkVersion != 3)
+          this.setState({flashMessage:'Please switch to ropsten'});
           web3js = new Web3(window.web3.currentProvider);
         } else {
           //user is not running metamask
